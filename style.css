@@ -1044,13 +1044,12 @@ button {
   }
 
   .guide-list .guide-card {
-    grid-template-columns: 96px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     border-radius: 16px;
   }
 
   .guide-list .card-cover {
-    width: 96px;
-    min-height: 132px;
+    display: none;
   }
 
   .guide-list .card-body {
