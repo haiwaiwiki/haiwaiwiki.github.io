@@ -298,11 +298,21 @@ button {
   background: #eaf1ff;
 }
 
+.card-grid .card-cover {
+  height: auto;
+  aspect-ratio: 2 / 1;
+  background: #fff;
+}
+
 .card-cover img {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
+}
+
+.card-grid .card-cover img {
+  object-fit: contain;
 }
 
 .card-body {
@@ -1068,7 +1078,7 @@ button {
   }
 
   .card-cover {
-    height: 112px;
+    height: auto;
   }
 
   .guide-card h2 {
