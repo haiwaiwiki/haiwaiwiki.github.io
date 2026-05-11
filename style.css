@@ -746,6 +746,10 @@ button {
   grid-template-columns: 1fr;
 }
 
+.step-card.has-gallery {
+  grid-template-columns: 1fr;
+}
+
 .step-copy {
   min-width: 0;
 }
@@ -783,6 +787,24 @@ button {
   overflow-wrap: anywhere;
 }
 
+.step-gallery {
+  min-width: 0;
+}
+
+.step-gallery.single {
+  align-self: start;
+}
+
+.step-gallery.multi {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.step-card.has-gallery .step-gallery {
+  width: 100%;
+}
+
 .step-visual {
   margin: 0;
   overflow: hidden;
@@ -794,10 +816,14 @@ button {
 .step-visual img {
   display: block;
   width: 100%;
-  max-height: 560px;
-  height: auto;
+  height: 420px;
   object-fit: contain;
   background: #eef4ff;
+  cursor: zoom-in;
+}
+
+.step-gallery.multi .step-visual img {
+  height: 340px;
 }
 
 .step-visual figcaption {
@@ -810,6 +836,69 @@ button {
 
 .step-visual.is-missing figcaption::after {
   content: "（图片暂未找到，已显示占位图）";
+}
+
+.image-preview {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: rgba(10, 18, 35, .78);
+  backdrop-filter: blur(12px);
+}
+
+.image-preview[hidden] {
+  display: none;
+}
+
+.image-preview figure {
+  width: auto;
+  max-width: min(92vw, 980px);
+  max-height: calc(100vh - 56px);
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  margin: 0;
+  overflow: visible;
+}
+
+.image-preview img {
+  width: auto;
+  max-width: min(92vw, 980px);
+  max-height: calc(100vh - 128px);
+  object-fit: contain;
+  border-radius: 14px;
+  background: transparent;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .36);
+}
+
+.image-preview figcaption {
+  max-width: min(92vw, 980px);
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, .86);
+  font-size: 14px;
+  line-height: 1.6;
+  background: rgba(10, 18, 35, .62);
+}
+
+.image-preview-close {
+  position: fixed;
+  top: 22px;
+  right: 24px;
+  height: 38px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, .35);
+  border-radius: 99px;
+  color: #fff;
+  background: rgba(255, 255, 255, .14);
+  font-weight: 800;
+}
+
+.preview-open {
+  overflow: hidden;
 }
 
 .tip-box {
@@ -976,6 +1065,12 @@ button {
   }
 }
 
+@media (min-width: 1200px) {
+  .step-gallery.multi .step-visual img {
+    height: 320px;
+  }
+}
+
 @media (max-width: 900px) {
   body {
     padding-top: 64px;
@@ -1136,6 +1231,16 @@ button {
     grid-template-columns: 1fr;
     padding: 16px;
     border-radius: 18px;
+  }
+
+  .step-gallery.multi {
+    grid-template-columns: 1fr;
+  }
+
+  .step-visual img,
+  .step-gallery.multi .step-visual img {
+    height: auto;
+    max-height: 560px;
   }
 
   .step-head {

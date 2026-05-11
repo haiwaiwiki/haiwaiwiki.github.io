@@ -31,6 +31,18 @@ const cardGrid = document.querySelector("#card-grid");
 const searchInput = document.querySelector("#search-input");
 const resultCount = document.querySelector("#result-count");
 const viewButtons = document.querySelectorAll(".view-button");
+const imagePreview = document.createElement("div");
+
+imagePreview.className = "image-preview";
+imagePreview.hidden = true;
+imagePreview.innerHTML = `
+  <button class="image-preview-close" type="button" aria-label="关闭图片预览">关闭</button>
+  <figure>
+    <img src="" alt="">
+    <figcaption></figcaption>
+  </figure>
+`;
+document.body.appendChild(imagePreview);
 
 function isMatchFilter(article) {
   if (state.filter === "all") return true;
@@ -57,6 +69,10 @@ function isMatchQuery(article) {
       step.title,
       step.description,
       step.imageCaption,
+      ...(step.images || []).flatMap((image) => [
+        image.caption,
+        image.alt
+      ]),
       ...(step.tips || [])
     ])
   ].join(" ").toLowerCase();
@@ -124,10 +140,25 @@ function renderNotice(notice) {
   return `<div class="notice ${notice.type || "info"}">${notice.text}</div>`;
 }
 
+function getStepImages(step) {
+  if (step.images?.length) return step.images;
+  if (step.image || step.imageFallback) {
+    return [{
+      src: step.image,
+      fallback: step.imageFallback,
+      alt: step.imageAlt || step.title,
+      caption: step.imageCaption || step.imageAlt || step.title
+    }];
+  }
+  return [];
+}
+
 function renderStep(step) {
-  const hasImage = step.image || step.imageFallback;
+  const images = getStepImages(step);
+  const hasImage = images.length > 0;
+  const hasGallery = images.length > 1;
   return `
-    <section class="step-card ${hasImage ? "" : "text-only"}" id="${step.id}">
+    <section class="step-card ${hasImage ? "" : "text-only"} ${hasGallery ? "has-gallery" : ""}" id="${step.id}">
       <div class="step-copy">
         <div class="step-head">
           <span>${step.number}</span>
@@ -144,12 +175,16 @@ function renderStep(step) {
         ` : ""}
       </div>
       ${hasImage ? `
-        <figure class="step-visual">
-          <img ${imageAttrs(step.image, step.imageFallback)} alt="${step.imageAlt || step.title}">
-          <div>
-            <figcaption>${step.imageCaption || step.imageAlt || step.title}</figcaption>
-          </div>
-        </figure>
+        <div class="step-gallery ${hasGallery ? "multi" : "single"}">
+          ${images.map((image) => `
+            <figure class="step-visual">
+              <img ${imageAttrs(image.src, image.fallback)} alt="${image.alt || step.title}" data-preview-caption="${image.caption || image.alt || step.title}" title="点击放大预览">
+              <div>
+                <figcaption>${image.caption || image.alt || step.title}</figcaption>
+              </div>
+            </figure>
+          `).join("")}
+        </div>
       ` : ""}
     </section>
   `;
@@ -297,6 +332,21 @@ function renderDetail(article) {
   setupTocObserver();
 }
 
+function openImagePreview(img) {
+  const previewImg = imagePreview.querySelector("img");
+  const caption = imagePreview.querySelector("figcaption");
+  previewImg.src = img.currentSrc || img.src;
+  previewImg.alt = img.alt || "教程截图";
+  caption.textContent = img.dataset.previewCaption || img.alt || "";
+  imagePreview.hidden = false;
+  document.body.classList.add("preview-open");
+}
+
+function closeImagePreview() {
+  imagePreview.hidden = true;
+  document.body.classList.remove("preview-open");
+}
+
 function route() {
   const hash = decodeURIComponent(window.location.hash || "#/");
   const match = hash.match(/^#\/article\/(.+)$/);
@@ -346,6 +396,12 @@ viewButtons.forEach((button) => {
 });
 
 detailView.addEventListener("click", (event) => {
+  const image = event.target.closest(".step-visual img");
+  if (image) {
+    openImagePreview(image);
+    return;
+  }
+
   const button = event.target.closest("[data-step-id]");
   if (!button) return;
 
@@ -354,6 +410,16 @@ detailView.addEventListener("click", (event) => {
     setActiveStep(button.dataset.stepId);
     target.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+});
+
+imagePreview.addEventListener("click", (event) => {
+  if (event.target === imagePreview || event.target.closest(".image-preview-close")) {
+    closeImagePreview();
+  }
+});
+
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !imagePreview.hidden) closeImagePreview();
 });
 
 window.addEventListener("hashchange", route);

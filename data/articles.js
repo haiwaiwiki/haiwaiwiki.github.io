@@ -169,7 +169,8 @@ window.GUIDE_ARTICLES = [
     id: "apple-id-region",
     title: "2026最新外区Apple ID注册全指南（免信用卡/免翻墙）",
     description: "面向新手的外区 Apple ID 注册与改区保姆级教程，覆盖地区选择、iCloud 官网注册、国区账号改区、免税州地址填写，以及最容易导致封号或锁机的登录注意事项。",
-    cover: "assets/placeholder.svg",
+    cover: "assets/tutorial-images/apple-id/封面.jpg",
+    coverFallback: "assets/placeholder.svg",
     category: "Apple ID",
     group: "region",
     status: "available",
@@ -213,56 +214,111 @@ window.GUIDE_ARTICLES = [
       {
         id: "apple-step-01",
         number: "01",
-        title: "先确认你为什么需要外区 Apple ID",
-        description: "外区 Apple ID 的核心用途是访问国区 App Store 没有上架的应用，例如部分 AI 软件、海外工具、特定游戏或区域限定服务。",
+        title: "打开 iCloud 官网并进入创建账户",
+        description: "在浏览器打开 iCloud 官网，点击登录入口，再选择“创建你的 Apple 账户”。新手优先使用 iCloud 官网入口，路径更直观，也方便后续继续完成邮箱和手机验证。",
+        images: [
+          {
+            src: "assets/tutorial-images/apple-id/步骤01-01.jpg",
+            alt: "在海外服务使用指南中找到 iCloud 官网地址",
+            caption: "先从教程里的相关链接进入 iCloud 官网，避免手动搜索误进广告页或相似页面。"
+          },
+          {
+            src: "assets/tutorial-images/apple-id/步骤01-02.jpg",
+            alt: "打开 iCloud 官网首页",
+            caption: "进入 iCloud 官网后，先找到页面上的登录入口。"
+          },
+          {
+            src: "assets/tutorial-images/apple-id/步骤01-03.jpg",
+            alt: "在 Apple 账户登录页选择创建你的 Apple 账户",
+            caption: "在登录页点击“创建你的 Apple 账户”，进入新账号注册流程。"
+          }
+        ],
         tips: [
-          "美区应用最全、更新最快，适合长期追新，尤其是最新 AI 工具和海外软件。",
-          "台区、港区界面更接近中文使用习惯，门槛较低。",
-          "部分交易所或地区限定应用不一定在美区提供，币圈用户常会额外准备台区或港区账号。"
+          "注册前建议关闭代理、加速器和科学上网软件，使用真实稳定的国内网络。",
+          "如果浏览器已经登录过其他 Apple 账户，可以先退出，或者换一个干净浏览器环境。",
+          "不要在短时间内反复刷新、反复提交注册信息。"
         ]
       },
       {
         id: "apple-step-02",
         number: "02",
-        title: "准备邮箱、手机号和真实网络环境",
-        description: "注册前准备一个国内邮箱和一个 +86 手机号。邮箱推荐 QQ 邮箱或 163 邮箱，手机号最好没有注册过 Apple ID。",
+        title: "填写姓名、地区、生日、邮箱和密码",
+        description: "按照页面提示填写姓名、国家或地区、出生日期、邮箱和密码。这里的国家或地区就是你要注册的目标区，例如土耳其、美国、香港或台湾。",
+        images: [
+          {
+            src: "assets/tutorial-images/apple-id/步骤02-01.jpg",
+            alt: "填写 Apple 账户姓名地区生日邮箱和密码",
+            caption: "填写基础资料时，地区、生日、邮箱和密码都建议保持长期稳定。"
+          },
+          {
+            src: "assets/tutorial-images/apple-id/步骤02-02.jpg",
+            alt: "填写手机号并选择短信验证",
+            caption: "手机号可以使用 +86 中国大陆手机号，验证方式一般选择短信。"
+          },
+          {
+            src: "assets/tutorial-images/apple-id/步骤02-03.jpg",
+            alt: "填写验证码并确认营销通知选项",
+            caption: "按页面要求填写图形验证码，营销通知选项可按个人需要保留或取消。"
+          }
+        ],
         tips: [
-          "注册前必须关闭代理、加速器、科学上网软件。",
-          "建议使用家里宽带或手机流量这类真实、稳定的国内网络。",
-          "不要短时间内频繁切换网络、设备和浏览器。"
+          "邮箱建议使用自己长期可用的邮箱，不要使用临时邮箱。",
+          "出生年份建议保证账号为成年人状态，避免后续遇到年龄限制。",
+          "密码不要和其他网站完全共用，最好用密码管理器保存。"
         ]
       },
       {
         id: "apple-step-03",
         number: "03",
-        title: "推荐方法：从 iCloud 官网创建 Apple 账户",
-        description: "打开 iCloud 官网，选择“创建你的 Apple 账户”。新手优先使用 iCloud 官网入口，不建议一开始就去 Apple ID 官网反复尝试。",
+        title: "验证电子邮件地址",
+        description: "提交基础信息后，Apple 会向你填写的邮箱发送验证码。打开邮箱查看邮件，把收到的 6 位验证码填回页面。",
+        images: [
+          {
+            src: "assets/tutorial-images/apple-id/步骤03-01.jpg",
+            alt: "验证 Apple 账户电子邮件地址",
+            caption: "邮箱验证码通常为 6 位数字，输入后继续下一步。"
+          }
+        ],
         tips: [
-          "iCloud 官网入口相对更适合新号创建。",
-          "如果浏览器已经登录过其他 Apple 账号，建议先退出或换一个干净浏览器环境。",
-          "页面语言不影响注册，关键是地区、生日、邮箱和手机号信息要稳定。"
+          "验证码不要发给任何人。",
+          "如果收不到邮件，先检查垃圾邮件或广告邮件文件夹。",
+          "短时间内不要频繁点击重新发送验证码。"
         ]
       },
       {
         id: "apple-step-04",
         number: "04",
-        title: "选择目标国家或地区，并填写成年人生日",
-        description: "根据自己的需求选择美国、台湾或香港等地区。出生年份建议填写 2008 年以前，确保账号为成年人状态，避免未成年限制。",
+        title: "验证手机号码",
+        description: "完成邮箱验证后，继续输入手机短信验证码。手机号可以使用国内 +86 手机号，只要能正常接收短信即可。",
+        images: [
+          {
+            src: "assets/tutorial-images/apple-id/步骤04-01.jpg",
+            alt: "验证 Apple 账户手机号码",
+            caption: "收到短信后填写验证码，完成手机号验证。"
+          }
+        ],
         tips: [
-          "长期追新和下载海外 AI 应用，优先考虑美区。",
-          "需要中文界面和低门槛使用，可以考虑台区或港区。",
-          "生日信息后续可能影响账号权限，建议保持稳定，不要随意乱填。"
+          "如果收不到短信，可以等待一段时间再试。",
+          "不要频繁更换手机号、网络和设备重新提交。",
+          "手机号是后续找回账号的重要凭据，建议使用自己长期持有的号码。"
         ]
       },
       {
         id: "apple-step-05",
         number: "05",
-        title: "完成邮箱验证码和 +86 手机验证码",
-        description: "按照页面提示，先输入邮箱收到的验证码，再输入 +86 手机号收到的短信验证码，确认条款后完成注册。",
+        title: "同意 iCloud 条款并完成账户创建",
+        description: "邮箱和手机验证完成后，页面会显示 iCloud 条款与条件。确认无误后点击“同意”，完成 Apple 账户创建。",
+        images: [
+          {
+            src: "assets/tutorial-images/apple-id/步骤05-01.jpg",
+            alt: "同意 iCloud 条款与条件",
+            caption: "点击“同意”后，Apple 账户注册流程基本完成。"
+          }
+        ],
         tips: [
-          "验证码不要泄露给任何人。",
-          "如果收不到短信，可以等待一段时间再试，避免短时间反复提交。",
-          "如果提示无法创建账户，优先检查是否开了代理、网络是否异常、手机号是否频繁使用。"
+          "如果页面提示无法创建账户，优先检查是否开了代理、网络是否异常。",
+          "如果卡在验证环节，不要连续高频提交，可以稍后再试。",
+          "注册成功后先保存好邮箱、手机号和密码，再进行 App Store 登录。"
         ]
       },
       {
