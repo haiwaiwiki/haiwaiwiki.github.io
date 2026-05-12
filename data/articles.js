@@ -11,7 +11,7 @@ window.GUIDE_ARTICLES = [
     difficulty: "简单",
     riskLevel: "低",
     updatedAt: "2026-05-11",
-    duration: "5-10 分钟",
+    duration: "3-5 分钟",
     targetUsers: [
       "第一次注册 Google 账号的新手用户",
       "不知道从哪里进入 Google 注册入口的用户",

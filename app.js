@@ -103,9 +103,21 @@ function getFilteredArticles() {
   return articles.filter((article) => isMatchFilter(article) && isMatchQuery(article));
 }
 
-function imageAttrs(src, fallback) {
+function webpSrc(src) {
+  if (!src || src.includes("placeholder.svg") || src.endsWith(".webp")) return src;
+  return src.replace(/\.(png|jpe?g)$/i, ".webp");
+}
+
+function imageAttrs(src, fallback, loading = "lazy", defer = false) {
   const safeFallback = fallback || "assets/placeholder.svg";
-  return `src="${src || safeFallback}" data-fallback="${safeFallback}" onerror="handleImageError(this)"`;
+  const fallbackSrc = webpSrc(safeFallback) || safeFallback;
+  const displaySrc = webpSrc(src) || fallbackSrc;
+  const loadAttrs = loading ? ` loading="${loading}"` : "";
+  const previewSrc = src || safeFallback;
+  if (defer) {
+    return `src="${fallbackSrc}" data-src="${displaySrc}" data-preview-src="${previewSrc}" data-original-src="${src || safeFallback}" data-original-fallback="${safeFallback}" data-fallback="${fallbackSrc}" decoding="async"${loadAttrs} onerror="handleImageError(this)"`;
+  }
+  return `src="${displaySrc}" data-preview-src="${previewSrc}" data-original-src="${src || safeFallback}" data-original-fallback="${safeFallback}" data-fallback="${fallbackSrc}" decoding="async"${loadAttrs} onerror="handleImageError(this)"`;
 }
 
 window.handleImageError = function handleImageError(img) {
@@ -114,6 +126,10 @@ window.handleImageError = function handleImageError(img) {
     const visual = img.closest(".step-visual");
     if (visual && fallback.includes("placeholder.svg")) visual.classList.add("is-missing");
     img.src = fallback;
+    if (img.dataset.originalFallback) {
+      img.dataset.originalSrc = img.dataset.originalFallback;
+      img.dataset.previewSrc = img.dataset.originalFallback;
+    }
     img.dataset.fallback = "assets/placeholder.svg";
     return;
   }
@@ -121,6 +137,7 @@ window.handleImageError = function handleImageError(img) {
   const visual = img.closest(".step-visual");
   if (visual) visual.classList.add("is-missing");
   img.src = "assets/placeholder.svg";
+  img.dataset.previewSrc = "assets/placeholder.svg";
 };
 
 function renderHome() {
@@ -240,9 +257,9 @@ function renderStep(step) {
             </div>
           ` : ""}
           <div class="gallery-stage">
-          ${images.map((image) => `
+          ${images.map((image, index) => `
             <figure class="step-visual layout-${image.layout || galleryLayout} ${hasGallery ? "gallery-slide" : ""}">
-              <img ${imageAttrs(image.src, image.fallback)} alt="${image.alt || step.title}" data-preview-caption="${image.caption || image.alt || step.title}" title="点击放大预览">
+              <img ${imageAttrs(image.src, image.fallback, "lazy", hasGallery && index > 0)} alt="${image.alt || step.title}" data-preview-caption="${image.caption || image.alt || step.title}" title="点击放大预览">
               <div>
                 <figcaption>${image.caption || image.alt || step.title}</figcaption>
               </div>
@@ -267,6 +284,11 @@ function setGalleryIndex(gallery, nextIndex) {
   const normalized = (nextIndex + slides.length) % slides.length;
   gallery.dataset.activeIndex = String(normalized);
   slides.forEach((slide, index) => slide.classList.toggle("active", index === normalized));
+  const activeImage = slides[normalized]?.querySelector("img[data-src]");
+  if (activeImage) {
+    activeImage.src = activeImage.dataset.src;
+    activeImage.removeAttribute("data-src");
+  }
   gallery.querySelectorAll(".gallery-dot").forEach((dot, index) => {
     dot.classList.toggle("active", index === normalized);
   });
@@ -498,7 +520,11 @@ function renderDetail(article) {
 function openImagePreview(img) {
   const previewImg = imagePreview.querySelector("img");
   const caption = imagePreview.querySelector("figcaption");
-  previewImg.src = img.currentSrc || img.src;
+  const fallbackSrc = img.currentSrc || img.src;
+  previewImg.onerror = () => {
+    if (previewImg.src !== fallbackSrc) previewImg.src = fallbackSrc;
+  };
+  previewImg.src = img.dataset.previewSrc || fallbackSrc;
   previewImg.alt = img.alt || "教程截图";
   caption.textContent = img.dataset.previewCaption || img.alt || "";
   imagePreview.hidden = false;
