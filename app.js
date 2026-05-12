@@ -8,7 +8,8 @@ const groupNames = {
 
 const statusNames = {
   available: "可用",
-  draft: "待完善"
+  draft: "待完善",
+  "high-risk": "高风险提示"
 };
 
 const riskNames = {
@@ -46,7 +47,8 @@ document.body.appendChild(imagePreview);
 
 function isMatchFilter(article) {
   if (state.filter === "all") return true;
-  if (state.filter === "available" || state.filter === "draft") return article.status === state.filter;
+  if (state.filter === "available") return article.status === "available" || article.status === "high-risk";
+  if (state.filter === "draft") return article.status === state.filter;
   return article.group === state.filter;
 }
 
@@ -65,6 +67,23 @@ function isMatchQuery(article) {
     article.updatedAt,
     ...(article.targetUsers || []),
     ...(article.notices || []).map((notice) => notice.text),
+    ...(article.topSections || []).flatMap((section) => [
+      section.title,
+      section.description,
+      ...(section.items || [])
+    ]),
+    ...(article.platforms || []).flatMap((platform) => [
+      platform.name,
+      platform.url,
+      ...(platform.features || [])
+    ]),
+    ...(article.extraSections || []).flatMap((section) => [
+      section.title,
+      section.description,
+      ...(section.items || [])
+    ]),
+    ...(article.riskWarnings || []).flatMap((risk) => [risk.title, risk.description]),
+    ...(article.faq || []).flatMap((item) => [item.question, item.answer]),
     ...(article.steps || []).flatMap((step) => [
       step.title,
       step.description,
@@ -92,6 +111,8 @@ function imageAttrs(src, fallback) {
 window.handleImageError = function handleImageError(img) {
   const fallback = img.dataset.fallback;
   if (fallback && img.src.indexOf(encodeURI(fallback)) === -1) {
+    const visual = img.closest(".step-visual");
+    if (visual && fallback.includes("placeholder.svg")) visual.classList.add("is-missing");
     img.src = fallback;
     img.dataset.fallback = "assets/placeholder.svg";
     return;
@@ -114,7 +135,7 @@ function renderHome() {
   }
 
   cardGrid.innerHTML = filtered.map((article) => `
-    <a class="guide-card" href="#/article/${article.id}">
+    <a class="guide-card ${article.coverMode === "cover" ? "cover-fill" : ""}" href="#/article/${article.id}">
       <div class="card-cover">
         <img ${imageAttrs(article.cover, article.coverFallback)} alt="${article.title}">
       </div>
@@ -140,14 +161,44 @@ function renderNotice(notice) {
   return `<div class="notice ${notice.type || "info"}">${notice.text}</div>`;
 }
 
+function renderRelatedArticleCard(articleId) {
+  const article = articles.find((item) => item.id === articleId);
+  if (!article) return "";
+
+  return `
+    <a class="related-article-card" href="#/article/${article.id}">
+      <div class="related-cover">
+        <img ${imageAttrs(article.cover, article.coverFallback)} alt="${article.title}">
+      </div>
+      <div class="related-copy">
+        <div class="meta-row">
+          <span class="badge ${article.status}">${statusNames[article.status] || article.status}</span>
+          <span class="badge">${article.difficulty}</span>
+          <span class="badge risk-${article.riskLevel}">${riskNames[article.riskLevel] || article.riskLevel}</span>
+        </div>
+        <h3>${article.title}</h3>
+        <p>${article.description || article.summary}</p>
+        <span>${article.category} · ${article.updatedAt}</span>
+      </div>
+    </a>
+  `;
+}
+
 function getStepImages(step) {
-  if (step.images?.length) return step.images;
+  const defaultLayout = step.imageLayout || "phone";
+  if (step.images?.length) {
+    return step.images.map((image) => ({
+      ...image,
+      layout: image.layout || defaultLayout
+    }));
+  }
   if (step.image || step.imageFallback) {
     return [{
       src: step.image,
       fallback: step.imageFallback,
       alt: step.imageAlt || step.title,
-      caption: step.imageCaption || step.imageAlt || step.title
+      caption: step.imageCaption || step.imageAlt || step.title,
+      layout: defaultLayout
     }];
   }
   return [];
@@ -157,6 +208,8 @@ function renderStep(step) {
   const images = getStepImages(step);
   const hasImage = images.length > 0;
   const hasGallery = images.length > 1;
+  const galleryLayout = step.imageLayout || images[0]?.layout || "phone";
+  const galleryId = `${step.id}-gallery`;
   return `
     <section class="step-card ${hasImage ? "" : "text-only"} ${hasGallery ? "has-gallery" : ""}" id="${step.id}">
       <div class="step-copy">
@@ -173,21 +226,56 @@ function renderStep(step) {
             <ul>${step.tips.map((tip) => `<li>${tip}</li>`).join("")}</ul>
           </div>
         ` : ""}
+        ${step.relatedArticleId ? renderRelatedArticleCard(step.relatedArticleId) : ""}
       </div>
       ${hasImage ? `
-        <div class="step-gallery ${hasGallery ? "multi" : "single"}">
+        <div class="step-gallery ${hasGallery ? "multi is-carousel" : "single"} layout-${galleryLayout}" data-gallery-id="${galleryId}" data-active-index="0">
+          ${hasGallery ? `
+            <div class="gallery-toolbar">
+              <span>${images.length} 张图</span>
+              <div>
+                <button type="button" class="gallery-control" data-gallery-action="prev" aria-label="上一张">上一张</button>
+                <button type="button" class="gallery-control" data-gallery-action="next" aria-label="下一张">下一张</button>
+              </div>
+            </div>
+          ` : ""}
+          <div class="gallery-stage">
           ${images.map((image) => `
-            <figure class="step-visual">
+            <figure class="step-visual layout-${image.layout || galleryLayout} ${hasGallery ? "gallery-slide" : ""}">
               <img ${imageAttrs(image.src, image.fallback)} alt="${image.alt || step.title}" data-preview-caption="${image.caption || image.alt || step.title}" title="点击放大预览">
               <div>
                 <figcaption>${image.caption || image.alt || step.title}</figcaption>
               </div>
             </figure>
           `).join("")}
+          </div>
+          ${hasGallery ? `
+            <div class="gallery-dots" aria-label="图片切换">
+              ${images.map((_, index) => `<button type="button" class="gallery-dot ${index === 0 ? "active" : ""}" data-gallery-index="${index}" aria-label="第 ${index + 1} 张"></button>`).join("")}
+            </div>
+          ` : ""}
         </div>
       ` : ""}
     </section>
   `;
+}
+
+function setGalleryIndex(gallery, nextIndex) {
+  const slides = Array.from(gallery.querySelectorAll(".gallery-slide"));
+  if (!slides.length) return;
+
+  const normalized = (nextIndex + slides.length) % slides.length;
+  gallery.dataset.activeIndex = String(normalized);
+  slides.forEach((slide, index) => slide.classList.toggle("active", index === normalized));
+  gallery.querySelectorAll(".gallery-dot").forEach((dot, index) => {
+    dot.classList.toggle("active", index === normalized);
+  });
+}
+
+function setupGalleries() {
+  detailView.querySelectorAll(".step-gallery.is-carousel").forEach((gallery) => {
+    setGalleryIndex(gallery, Number(gallery.dataset.activeIndex || 0));
+  });
 }
 
 function renderFollowUps(followUps) {
@@ -221,10 +309,78 @@ function renderLinks(links) {
         ${links.map((link) => `
           <li>
             <strong>${link.title}：</strong>
-            <a href="${link.url}" target="_blank" rel="noopener noreferrer">点击跳转</a>
+            <a href="${link.url}" ${link.url.startsWith("#") ? "" : 'target="_blank" rel="noopener noreferrer"'}>点击跳转</a>
           </li>
         `).join("")}
       </ul>
+    </section>
+  `;
+}
+
+function renderPlatforms(platforms) {
+  if (!platforms?.length) return "";
+  return `
+    <section class="platform-section">
+      <h2>礼品卡购买平台说明</h2>
+      <div class="platform-grid">
+        ${platforms.map((platform) => `
+          <article class="platform-card">
+            <div>
+              <h3>${platform.name}</h3>
+              <a href="${platform.url}" target="_blank" rel="noopener noreferrer">${platform.url}</a>
+            </div>
+            <ul>${platform.features.map((feature) => `<li>${feature}</li>`).join("")}</ul>
+          </article>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderExtraSections(sections) {
+  if (!sections?.length) return "";
+  return sections.map((section) => `
+    <section class="extra-section ${section.type || "info"}">
+      <h2>${section.title}</h2>
+      <p>${section.description}</p>
+      ${section.items?.length ? `<ul>${section.items.map((item) => `<li>${item}</li>`).join("")}</ul>` : ""}
+    </section>
+  `).join("");
+}
+
+function renderRiskWarnings(risks) {
+  if (!risks?.length) return "";
+  return `
+    <section class="risk-section">
+      <h2>风险说明</h2>
+      <div class="risk-list">
+        ${risks.map((risk, index) => `
+          <article class="risk-card">
+            <span>${String(index + 1).padStart(2, "0")}</span>
+            <div>
+              <h3>${risk.title}</h3>
+              <p>${risk.description}</p>
+            </div>
+          </article>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderFaq(faq) {
+  if (!faq?.length) return "";
+  return `
+    <section class="faq-section">
+      <h2>常见问题</h2>
+      <div class="faq-list">
+        ${faq.map((item) => `
+          <details>
+            <summary>${item.question}</summary>
+            <p>${item.answer}</p>
+          </details>
+        `).join("")}
+      </div>
     </section>
   `;
 }
@@ -303,6 +459,8 @@ function renderDetail(article) {
         </header>
 
         <div class="article-content">
+          ${renderExtraSections(article.topSections)}
+
           ${article.targetUsers?.length ? `
             <section class="plain-section">
               <h2>适用人群</h2>
@@ -317,6 +475,8 @@ function renderDetail(article) {
           ` : ""}
 
           ${renderLinks(article.links)}
+          ${renderPlatforms(article.platforms)}
+          ${renderExtraSections(article.extraSections)}
 
           ${article.steps?.length ? `
             <section class="steps-section">
@@ -325,11 +485,14 @@ function renderDetail(article) {
           ` : `<div class="empty-state">这篇教程还在整理中。</div>`}
 
           ${renderFollowUps(article.followUps)}
+          ${renderRiskWarnings(article.riskWarnings)}
+          ${renderFaq(article.faq)}
         </div>
       </div>
     </div>
   `;
   setupTocObserver();
+  setupGalleries();
 }
 
 function openImagePreview(img) {
@@ -396,6 +559,21 @@ viewButtons.forEach((button) => {
 });
 
 detailView.addEventListener("click", (event) => {
+  const control = event.target.closest("[data-gallery-action]");
+  if (control) {
+    const gallery = control.closest(".step-gallery");
+    const current = Number(gallery.dataset.activeIndex || 0);
+    setGalleryIndex(gallery, control.dataset.galleryAction === "next" ? current + 1 : current - 1);
+    return;
+  }
+
+  const dot = event.target.closest("[data-gallery-index]");
+  if (dot) {
+    const gallery = dot.closest(".step-gallery");
+    setGalleryIndex(gallery, Number(dot.dataset.galleryIndex));
+    return;
+  }
+
   const image = event.target.closest(".step-visual img");
   if (image) {
     openImagePreview(image);

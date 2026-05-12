@@ -514,22 +514,417 @@ window.GUIDE_ARTICLES = [
   },
   {
     id: "turkey-gpt-subscription",
-    title: "土区 GPT 订阅流程与风险说明",
-    description: "后续可补充土区订阅前提、支付方式、订阅路径、失败原因、退款与账号风险说明。",
-    cover: "assets/placeholder.svg",
-    category: "GPT 订阅",
+    title: "土区 Apple 礼品卡充值订阅 ChatGPT Plus：流程说明与风险提示",
+    description: "通过外区 Apple ID 和土区 iTunes Gift Card 订阅 ChatGPT Plus 的流程说明，并重点提醒余额、改区、支付和账号风控风险。",
+    cover: "assets/tutorial-images/chatgpt-subscription-tr/cover.png",
+    coverFallback: "assets/placeholder.svg",
+    coverMode: "cover",
+    category: "ChatGPT 订阅",
     group: "subscription",
-    status: "draft",
-    difficulty: "进阶",
+    status: "high-risk",
+    difficulty: "中等",
     riskLevel: "高",
-    updatedAt: "待补充",
-    duration: "20-40 分钟",
-    targetUsers: ["需要了解订阅路径、价格差异、支付限制和账号风险的用户"],
-    summary: "占位教程。后续可补充土区订阅前提、支付方式、订阅路径、失败原因、退款与账号风险说明。",
-    notices: [
-      { type: "warning", text: "订阅、地区和支付资料需遵守 OpenAI、应用商店及支付机构规则。价格区差和地区切换可能存在服务限制或账号风险。" }
+    updatedAt: "2026-05-12",
+    duration: "30-60 分钟",
+    targetUsers: [
+      "已经拥有外区 Apple ID 的用户",
+      "想了解 iTunes Gift Card 充值和 App Store 订阅流程的用户",
+      "想评估土区订阅风险的用户",
+      "不建议完全新手直接操作"
     ],
-    steps: [],
-    followUps: null
+    summary: "本教程介绍通过外区 Apple ID、iTunes Gift Card 礼品卡充值，并在 App Store 内订阅 ChatGPT Plus 的基本流程。同时说明改区、余额、支付、账号风控等常见风险，适合已经了解外区 Apple ID 基础操作的用户阅读。",
+    topSections: [
+      {
+        type: "risk",
+        title: "先看风险，再决定是否操作",
+        description: "这类订阅方式涉及外区 Apple ID、礼品卡充值、App Store 订阅、余额处理和账号风控。礼品卡通常购买后不易退款，订阅是否成功也可能受到 Apple ID 地区、支付环境、网络环境、账号状态等因素影响。本文只做正常流程说明和风险提示，不保证一定成功，也不提供绕过平台规则或风控的做法。"
+      }
+    ],
+    notices: [
+      { type: "warning", text: "本文只做正常流程说明和风险提示，不保证任何平台、账号、支付方式一定可用。" },
+      { type: "warning", text: "用户需要自行承担礼品卡不可退、账号风控、订阅失败、余额残留等风险。不建议在主力 Apple ID 上进行高风险尝试。" },
+      { type: "note", text: "礼品卡价格、汇率、手续费、库存、支付方式和 ChatGPT Plus 订阅价格都可能变化，最终以平台、App Store 和 ChatGPT App 内实际显示为准。" },
+      { type: "info", text: "不提供绕过风控、规避平台规则、异常支付、异常注册等操作指导。请遵守 Apple、OpenAI、礼品卡平台及所在地法律法规。" }
+    ],
+    links: [
+      {
+        title: "外区 Apple ID 注册教程",
+        url: "#/article/apple-id-region"
+      },
+      {
+        title: "Oyunfor",
+        url: "https://www.oyunfor.com/"
+      },
+      {
+        title: "SEAGM",
+        url: "https://www.seagm.com/zh-cn"
+      },
+      {
+        title: "Apple 中国大陆技术支持",
+        url: "https://support.apple.com/zh-cn"
+      }
+    ],
+    platforms: [
+      {
+        name: "Oyunfor",
+        url: "https://www.oyunfor.com/",
+        features: [
+          "可以购买土区 iTunes Gift Card。",
+          "价格通常按实时汇率或平台报价变化。",
+          "不支持国内银行卡。",
+          "可能支持 MasterCard / Visa 等国际卡，或平台页面展示的其他支付方式。",
+          "是否可用、手续费和到账速度以平台实际页面为准。"
+        ]
+      },
+      {
+        name: "SEAGM",
+        url: "https://www.seagm.com/zh-cn",
+        features: [
+          "可以购买土区 iTunes Gift Card。",
+          "支持支付宝、微信等多种支付方式。",
+          "支付方式更适合国内用户。",
+          "可能会产生额外手续费。",
+          "手续费、汇率和最终价格以付款页面为准。"
+        ]
+      }
+    ],
+    extraSections: [
+      {
+        type: "warning",
+        title: "为什么不建议频繁修改 Apple ID 地区？",
+        description: "不建议为了订阅临时把主力 Apple ID 改到土耳其区。原因是 Apple ID 一旦存在余额，切换地区会受到限制。比如账号里残留 1 土耳其里拉余额，也可能导致无法直接转回国区。遇到这种情况，通常需要联系 Apple 客服处理余额问题，可能需要放弃余额后才能切回原地区。Apple 中国大陆客服电话：400-666-8800。",
+        items: [
+          "长期订阅更建议使用单独注册的外区 Apple ID。",
+          "不要用主力 Apple ID 频繁切换地区。",
+          "改区前先确认是否还有余额、订阅、家庭共享、付款方式等限制。",
+          "外区 Apple ID 注册教程可查看站内对应文章。"
+        ]
+      }
+    ],
+    steps: [
+      {
+        id: "turkey-gpt-step-01",
+        number: "01",
+        title: "准备外区 Apple ID",
+        navTitle: "准备 Apple ID",
+        description: "开始前需要准备一个可用于土耳其区 App Store 的 Apple ID。长期使用更建议新注册外区 Apple ID，而不是频繁修改主力账号地区。",
+        relatedArticleId: "apple-id-region",
+        tips: [
+          "不建议频繁修改主力 Apple ID 地区。",
+          "如果账号内有余额，后续切区会变麻烦。",
+          "外区 Apple ID 注册方法请查看站内“外区 Apple ID 注册全指南”。"
+        ]
+      },
+      {
+        id: "turkey-gpt-step-02",
+        number: "02",
+        title: "选择礼品卡购买平台",
+        navTitle: "选择平台",
+        description: "可以在多个平台购买土耳其区 iTunes Gift Card。本文会把 SEAGM 和 Oyunfor 分开说明，也可以自行评估其他正规渠道。不同平台支付方式、手续费、到账速度和售后能力不同。",
+        tips: [
+          "Oyunfor 通常更接近汇率价，但不支持国内银行卡。",
+          "SEAGM 支持支付宝、微信等支付方式，但可能有额外手续费。",
+          "价格、库存、手续费以平台实际页面为准。"
+        ]
+      },
+      {
+        id: "turkey-gpt-step-03",
+        number: "03",
+        title: "SEAGM 示例：登录并找到土耳其区礼品卡",
+        navTitle: "SEAGM 购买",
+        imageLayout: "wide",
+        description: "如果选择 SEAGM，可以先登录账号，再搜索或进入土耳其区 iTunes Gift Card / Apple Gift Card 商品页。SEAGM 的优势是支付方式对国内用户相对友好，但最终价格和手续费仍以结算页面为准。",
+        images: [
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/01seagm登录.jpg",
+            alt: "登录 SEAGM 账号",
+            caption: "SEAGM 示例：登录后再搜索对应地区的 Apple 礼品卡。"
+          },
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/02seagm土耳其礼品卡.jpg",
+            alt: "SEAGM 土耳其礼品卡商品",
+            caption: "确认商品地区是土耳其区，再继续选择面值。"
+          },
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/03seagm立即购买.jpg",
+            alt: "SEAGM 立即购买礼品卡",
+            caption: "确认商品、面值和结算价格后，再进入购买流程。"
+          },
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/04seagm立即购买.jpg",
+            alt: "SEAGM 确认购买",
+            caption: "再次确认地区、面值和价格，不确定时先不要付款。"
+          },
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/05seagm立即支付（选择支付方式）.jpg",
+            alt: "SEAGM 选择支付方式",
+            caption: "SEAGM 示例：支付方式、手续费和最终价格以付款页面为准。"
+          }
+        ],
+        tips: [
+          "注册时请使用自己能正常接收邮件的邮箱。",
+          "确认商品地区是 Turkey / Türkiye 后再付款。",
+          "手续费、汇率和最终价格以付款页面为准。"
+        ]
+      },
+      {
+        id: "turkey-gpt-step-04",
+        number: "04",
+        title: "Oyunfor 示例：登录并选择土耳其区礼品卡",
+        navTitle: "Oyunfor 参考",
+        imageLayout: "wide",
+        description: "如果你不使用 SEAGM，也可以参考 Oyunfor 的路径：按页面提示注册或登录账号，再选择土耳其区 iTunes Gift Card。Oyunfor 的支付方式对国内用户不一定方便，实际可用方式以平台页面为准。新手可以先看完 SEAGM 主线，再把这一节当作备选参考。",
+        images: [
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/01oyunfor注册.jpg",
+            alt: "Oyunfor 注册页面",
+            caption: "Oyunfor 示例：按平台页面提示注册账号。"
+          },
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/02oyunfor登录.jpg",
+            alt: "Oyunfor 登录页面",
+            caption: "登录后再选择对应地区的 Apple 礼品卡商品。"
+          },
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/03oyunfor500面值.jpg",
+            alt: "Oyunfor 土耳其区礼品卡面值",
+            caption: "确认礼品卡地区和面值后再继续。"
+          },
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/04oyunfor按需添加购物车.jpg",
+            alt: "Oyunfor 按需添加购物车",
+            caption: "按实际需要选择数量和面值，不要超额充值。"
+          }
+        ],
+        tips: [
+          "不要买错国家或地区。",
+          "Oyunfor 不一定适合国内银行卡用户，付款前先确认自己能否完成支付。",
+          "购买前确认商品标题、地区、面值和到账方式。"
+        ]
+      },
+      {
+        id: "turkey-gpt-step-05",
+        number: "05",
+        title: "确认礼品卡地区、面值和用途",
+        navTitle: "确认商品",
+        imageLayout: "wide",
+        description: "无论使用哪个平台，都要在付款前确认礼品卡地区是 Turkey / Türkiye，并确认可用于 App Store / iTunes 账户充值。不要只看价格，地区和用途比价格更重要。",
+        image: "assets/tutorial-images/chatgpt-subscription-tr/02seagm土耳其礼品卡.jpg",
+        imageFallback: "assets/placeholder.svg",
+        imageAlt: "确认土耳其区礼品卡商品",
+        imageCaption: "购买前确认商品地区是土耳其区，并确认可用于 App Store 兑换。",
+        tips: [
+          "商品地区非常重要。",
+          "购买前检查是否支持 App Store 兑换。",
+          "不确定时不要急着付款。"
+        ]
+      },
+      {
+        id: "turkey-gpt-step-06",
+        number: "06",
+        title: "选择合适面值",
+        navTitle: "选择面值",
+        imageLayout: "wide",
+        description: "根据需要选择礼品卡面值。如果是为了订阅 ChatGPT Plus，需要保证余额足够覆盖 App Store 内显示的订阅价格。不要把某个金额当作长期固定价格，购买前以 App 内实际价格为准。",
+        image: "assets/tutorial-images/chatgpt-subscription-tr/03oyunfor500面值.jpg",
+        imageFallback: "assets/placeholder.svg",
+        imageAlt: "选择礼品卡面值",
+        imageCaption: "如果 ChatGPT Plus 显示为 499 土耳其里拉，通常可选择 500 面值礼品卡；最终以 App 内实际价格为准。",
+        tips: [
+          "订阅价格可能变化，最终以 ChatGPT App 或 App Store 实际显示为准。",
+          "购买前要预留价格变化和税费差异风险。",
+          "礼品卡购买后通常不容易退款。"
+        ]
+      },
+      {
+        id: "turkey-gpt-step-07",
+        number: "07",
+        title: "完成付款并获取兑换码",
+        navTitle: "付款取码",
+        imageLayout: "wide",
+        description: "选择支付方式并完成付款后，在订单页面或邮箱中查看礼品卡兑换码。不同平台的支付方式不同，最终成本以付款页面为准。兑换码属于敏感信息，截图和转发时必须打码。",
+        images: [
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/05seagm立即支付（选择支付方式）.jpg",
+            alt: "SEAGM 选择支付方式",
+            caption: "SEAGM 示例：支付方式、手续费和最终价格以付款页面为准。"
+          },
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/06oyunfor付款.jpg",
+            alt: "Oyunfor 付款页面",
+            caption: "Oyunfor 示例：确认付款方式和订单金额后再支付。"
+          },
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/05oyunfor发票.jpg",
+            alt: "Oyunfor 订单发票",
+            caption: "支付成功后保存订单、发票或邮件记录，便于后续售后沟通。"
+          }
+        ],
+        tips: [
+          "兑换码不要发给别人。",
+          "支付成功后保存订单截图。",
+          "如果长时间未到账，联系购买平台客服。"
+        ]
+      },
+      {
+        id: "turkey-gpt-step-08",
+        number: "08",
+        title: "进入 App Store 兑换礼品卡",
+        navTitle: "兑换礼品卡",
+        imageLayout: "phone",
+        description: "打开 App Store，进入账户页面，选择兑换礼品卡或代码，将购买到的兑换码输入进去。兑换前确认当前 App Store 登录的是目标土区 Apple ID。",
+        image: "assets/tutorial-images/chatgpt-subscription-tr/步骤08.png",
+        imageFallback: "assets/placeholder.svg",
+        imageAlt: "在 App Store 兑换礼品卡",
+        imageCaption: "兑换前确认当前 App Store 登录的是目标外区 Apple ID。",
+        tips: [
+          "一定要确认 Apple ID 地区和礼品卡地区一致。",
+          "兑换码截图必须打码。",
+          "礼品卡兑换后余额通常不能随意转移。"
+        ]
+      },
+      {
+        id: "turkey-gpt-step-09",
+        number: "09",
+        title: "确认 Apple ID 余额",
+        navTitle: "确认余额",
+        imageLayout: "phone",
+        description: "兑换成功后，在 App Store 账户页面确认余额是否到账。余额到账后才建议继续订阅，不要在余额未显示时反复尝试付款。",
+        image: "assets/tutorial-images/chatgpt-subscription-tr/步骤09.png",
+        imageFallback: "assets/placeholder.svg",
+        imageAlt: "确认 Apple ID 余额",
+        imageCaption: "余额到账后才可以继续订阅。",
+        tips: [
+          "如果余额没有及时显示，可以稍等后刷新。",
+          "如果兑换失败，先检查地区是否一致。",
+          "不要重复尝试错误兑换码。"
+        ]
+      },
+      {
+        id: "turkey-gpt-step-10",
+        number: "10",
+        title: "打开 ChatGPT App 订阅 Plus",
+        navTitle: "订阅 Plus",
+        imageLayout: "phone",
+        description: "打开 ChatGPT App，登录自己的 ChatGPT 账号，在订阅页面选择 ChatGPT Plus，并通过 App Store 余额完成订阅。订阅价格和页面样式以 App 内实际显示为准。",
+        image: "assets/tutorial-images/chatgpt-subscription-tr/步骤10.png",
+        imageFallback: "assets/placeholder.svg",
+        imageAlt: "通过 ChatGPT App 订阅 Plus",
+        imageCaption: "订阅价格和页面样式以 ChatGPT App 内实际显示为准。",
+        tips: [
+          "订阅前确认 Apple ID 余额足够。",
+          "订阅过程以 App Store 弹窗显示为准。",
+          "不要在不确定账号状态时反复尝试付款。"
+        ]
+      },
+      {
+        id: "turkey-gpt-step-11",
+        number: "11",
+        title: "订阅成功后检查状态",
+        navTitle: "检查状态",
+        imageLayout: "phone",
+        description: "订阅完成后，回到 ChatGPT App 检查 Plus 状态是否生效。如果没有立即生效，可以重新打开 App、重新登录账号，或稍后再看。",
+        image: "assets/tutorial-images/chatgpt-subscription-tr/步骤11.png",
+        imageFallback: "assets/placeholder.svg",
+        imageAlt: "检查 ChatGPT Plus 状态",
+        imageCaption: "如果没有立即生效，可以重新登录或稍后再看。",
+        tips: [
+          "订阅状态可能需要短时间同步。",
+          "如果付款成功但未生效，保留订单记录。",
+          "必要时联系 Apple 或 OpenAI 支持。"
+        ]
+      },
+      {
+        id: "turkey-gpt-step-12",
+        number: "12",
+        title: "取消自动续订",
+        navTitle: "取消续订",
+        imageLayout: "phone",
+        description: "如果不想下个月自动扣费，可以进入 App Store 的订阅管理页面，找到 ChatGPT 订阅并取消自动续订。取消自动续订后，已付费周期内通常仍可继续使用。",
+        image: "assets/tutorial-images/chatgpt-subscription-tr/步骤12.png",
+        imageFallback: "assets/placeholder.svg",
+        imageAlt: "取消 ChatGPT 自动续订",
+        imageCaption: "取消自动续订后，已付费周期内通常仍可继续使用。",
+        tips: [
+          "取消自动续订不等于立即退款。",
+          "订阅到期前仍可使用当前周期服务。",
+          "建议订阅成功后立刻确认续订状态。"
+        ]
+      }
+    ],
+    riskWarnings: [
+      {
+        title: "礼品卡购买风险",
+        description: "礼品卡价格、库存、到账速度、手续费都可能变化。购买后通常不容易退款，买错地区或买错面值都可能造成损失。"
+      },
+      {
+        title: "Apple ID 地区和余额风险",
+        description: "Apple ID 地区、余额、订阅、家庭共享、付款方式等都会影响改区和订阅。账号残留余额可能导致无法切回原地区。"
+      },
+      {
+        title: "支付和手续费风险",
+        description: "不同平台支付方式不同，部分平台可能支持国际卡或平台页面展示的其他支付方式，部分平台支持支付宝和微信，但可能有额外手续费。最终成本以付款页面为准。"
+      },
+      {
+        title: "订阅价格变化风险",
+        description: "ChatGPT Plus 在不同地区的 App Store 价格可能变化。页面中不承诺固定价格，最终以 App 内显示为准。"
+      },
+      {
+        title: "ChatGPT 账号风控风险",
+        description: "如果账号登录环境频繁变化、IP 状态不稳定、地区跳动明显、异常登录频繁，可能触发安全验证或风控。建议保持稳定、正常的使用环境。"
+      },
+      {
+        title: "内容使用风险",
+        description: "使用 ChatGPT 时应遵守平台规则。不要尝试违规、危险、违法或明显敏感的请求，避免因异常使用行为影响账号安全。"
+      },
+      {
+        title: "售后风险",
+        description: "如果礼品卡平台、Apple、OpenAI 三方之间出现问题，处理链路可能比较长。建议保留购买记录、兑换记录、付款记录和订阅记录。"
+      }
+    ],
+    faq: [
+      {
+        question: "Oyunfor 和 SEAGM 哪个更适合？",
+        answer: "Oyunfor 通常价格更接近汇率，但支付方式对国内用户不一定方便；SEAGM 支持支付宝、微信等支付方式，但可能有额外手续费。最终选择要看实际价格、支付方式和个人风险承受能力。"
+      },
+      {
+        question: "订阅 ChatGPT Plus 一定要买 500 面值吗？",
+        answer: "不一定。要看 App 内实际显示价格。如果订阅价格是 499 土耳其里拉，500 面值通常够用；但价格可能变化，购买前应以实际页面为准。"
+      },
+      {
+        question: "为什么不建议主力 Apple ID 改区？",
+        answer: "因为改区会受到余额、订阅、家庭共享、付款方式等限制。一旦账号里有残留余额，可能无法直接切回国区，处理起来比较麻烦。"
+      },
+      {
+        question: "余额剩 1 里拉怎么办？",
+        answer: "一般需要联系 Apple 客服处理余额问题，可能需要放弃余额后才能切换地区。中国大陆 Apple 客服电话：400-666-8800。"
+      },
+      {
+        question: "订阅成功后可以取消自动续订吗？",
+        answer: "可以。进入 App Store 的订阅管理页面，找到 ChatGPT 订阅，取消自动续订即可。取消后通常仍可使用到当前付费周期结束。"
+      },
+      {
+        question: "如果付款成功但 ChatGPT Plus 没生效怎么办？",
+        answer: "先重新打开 ChatGPT App 或重新登录账号，等待同步。如果仍未生效，保留 App Store 订单记录，并联系 Apple 或 OpenAI 支持。"
+      }
+    ],
+    followUps: {
+      title: "再次提醒",
+      description: "这篇教程不是低价承诺，也不保证任何地区、平台、支付方式或账号状态一定可用。操作前请确认自己能接受礼品卡不可退、余额残留、订阅失败和售后链路较长等风险。",
+      items: [
+        {
+          title: "保留记录",
+          description: "保留购买平台订单、兑换记录、App Store 订单和 ChatGPT 订阅状态截图。"
+        },
+        {
+          title: "稳定使用",
+          description: "尽量保持稳定的登录环境和正常使用习惯，避免频繁切换地区、设备和网络。"
+        },
+        {
+          title: "理性判断",
+          description: "如果平台价格、支付方式或账号状态看起来异常，不建议继续操作。"
+        }
+      ]
+    }
   }
 ];
