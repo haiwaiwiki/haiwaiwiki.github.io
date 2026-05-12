@@ -711,8 +711,12 @@ button {
 .floating-toc .toc-link {
   width: 100%;
   justify-content: flex-start;
-  line-height: 1.35;
-  padding: 8px 10px;
+  min-height: 34px;
+  line-height: 1;
+  padding: 7px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .toc-link:hover {

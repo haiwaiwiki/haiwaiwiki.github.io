@@ -168,7 +168,7 @@ window.GUIDE_ARTICLES = [
   {
     id: "apple-id-region",
     title: "2026最新外区Apple ID注册全指南（免信用卡/免翻墙）",
-    description: "面向新手的外区 Apple ID 注册与改区保姆级教程，覆盖地区选择、iCloud 官网注册、国区账号改区、免税州地址填写，以及最容易导致封号或锁机的登录注意事项。",
+    description: "面向新手的外区 Apple ID 注册与 App Store 首次使用教程，覆盖 iCloud 官网注册、App Store 登录、地区检查、账单地址补全、None 支付方式验证，以及最容易导致封号或锁机的登录注意事项。",
     cover: "assets/tutorial-images/apple-id/封面.jpg",
     coverFallback: "assets/placeholder.svg",
     category: "Apple ID",
@@ -176,7 +176,7 @@ window.GUIDE_ARTICLES = [
     status: "available",
     difficulty: "中等",
     riskLevel: "中",
-    updatedAt: "2026-05-11",
+    updatedAt: "2026-05-12",
     duration: "20-40 分钟",
     targetUsers: [
       "需要下载国区 App Store 没有的应用的新手用户",
@@ -185,11 +185,11 @@ window.GUIDE_ARTICLES = [
       "需要使用港区、台区或美区 App Store 的用户",
       "希望避免信用卡绑定和常见注册风控的新手用户"
     ],
-    summary: "这篇教程整理外区 Apple ID 的地区选择、注册准备、iCloud 官网注册法、国区改区法和登录避坑点。重点提醒：注册前关闭代理，登录时只在 App Store 登录，不要在系统设置里登录外区 ID。",
+    summary: "这篇教程以新注册外区 Apple ID 为主线，整理 iCloud 官网注册、UU 加速器准备、App Store 登录、地区与账单地址检查，以及通过下载免费外区 App 触发账户验证并选择 None 支付方式。适用于任意目标地区的 Apple ID，关键是地区、地址和登录路径保持一致。",
     notices: [
       { type: "warning", text: "千万不要在 iPhone 的“设置”里登录刚注册的外区 Apple ID。正确方式是只在 App Store 里退出原账号后登录外区 ID。" },
-      { type: "warning", text: "注册或改区前请关闭所有代理、加速器、科学上网软件，使用国内真实网络环境。异常网络很容易触发“无法创建此账户”等苹果风控。" },
-      { type: "note", text: "填写美国账单地址时，优先选择免税州，例如 Oregon（俄勒冈州），可以减少后续购买或兑换礼品卡时遇到的税费问题。" },
+      { type: "warning", text: "注册阶段建议关闭代理、加速器、科学上网软件，使用真实稳定的网络环境。进入 App Store 首次验证前，再按教程开启 UU 加速器的 App Store 加速。" },
+      { type: "note", text: "本方法适用于任意目标地区 Apple ID。后续账单地址必须与注册时选择的国家或地区一致，不要把美国地址填到土区、港区或台区账号里。" },
       { type: "info", text: "本教程只用于正常注册、地区切换和 App Store 使用说明。请遵守 Apple 服务条款、应用商店规则和所在地法律法规。" }
     ],
     links: [
@@ -206,7 +206,7 @@ window.GUIDE_ARTICLES = [
         url: "https://account.apple.com/"
       },
       {
-        title: "美国地址生成器",
+        title: "地址生成器示例",
         url: "https://www.meiguodizhi.com/"
       }
     ],
@@ -215,6 +215,7 @@ window.GUIDE_ARTICLES = [
         id: "apple-step-01",
         number: "01",
         title: "打开 iCloud 官网并进入创建账户",
+        navTitle: "进入注册入口",
         description: "在浏览器打开 iCloud 官网，点击登录入口，再选择“创建你的 Apple 账户”。新手优先使用 iCloud 官网入口，路径更直观，也方便后续继续完成邮箱和手机验证。",
         images: [
           {
@@ -243,6 +244,7 @@ window.GUIDE_ARTICLES = [
         id: "apple-step-02",
         number: "02",
         title: "填写姓名、地区、生日、邮箱和密码",
+        navTitle: "填写基础资料",
         description: "按照页面提示填写姓名、国家或地区、出生日期、邮箱和密码。这里的国家或地区就是你要注册的目标区，例如土耳其、美国、香港或台湾。",
         images: [
           {
@@ -271,6 +273,7 @@ window.GUIDE_ARTICLES = [
         id: "apple-step-03",
         number: "03",
         title: "验证电子邮件地址",
+        navTitle: "邮箱验证",
         description: "提交基础信息后，Apple 会向你填写的邮箱发送验证码。打开邮箱查看邮件，把收到的 6 位验证码填回页面。",
         images: [
           {
@@ -289,6 +292,7 @@ window.GUIDE_ARTICLES = [
         id: "apple-step-04",
         number: "04",
         title: "验证手机号码",
+        navTitle: "手机验证",
         description: "完成邮箱验证后，继续输入手机短信验证码。手机号可以使用国内 +86 手机号，只要能正常接收短信即可。",
         images: [
           {
@@ -307,6 +311,7 @@ window.GUIDE_ARTICLES = [
         id: "apple-step-05",
         number: "05",
         title: "同意 iCloud 条款并完成账户创建",
+        navTitle: "同意条款",
         description: "邮箱和手机验证完成后，页面会显示 iCloud 条款与条件。确认无误后点击“同意”，完成 Apple 账户创建。",
         images: [
           {
@@ -324,62 +329,169 @@ window.GUIDE_ARTICLES = [
       {
         id: "apple-step-06",
         number: "06",
-        title: "只在 App Store 登录外区 ID",
-        description: "外区 Apple ID 注册完成后，不要去系统“设置”里登录。正确路径是打开 App Store，点击右上角头像，滑到底部退出原账号，然后登录新的外区 ID。",
+        title: "确认注册成功并保存账号信息",
+        navTitle: "注册成功",
+        description: "完成条款确认后，看到注册成功或进入 Apple 账户页面，就说明新账号已经创建完成。先保存好注册邮箱、绑定手机号、密码和目标地区信息，再进入后面的 App Store 首次使用流程。",
+        images: [
+          {
+            src: "assets/tutorial-images/apple-id/注册成功.jpg",
+            alt: "Apple 账户注册成功",
+            caption: "看到注册成功后，先保存账号信息，再继续 App Store 首次使用流程。"
+          }
+        ],
         tips: [
-          "千万不要在 iPhone 设置里登录刚注册的外区 ID。",
-          "App Store 登录只影响应用商店下载，不会替换你的 iCloud 主账号。",
-          "如果弹窗提示升级账户安全，优先选择“其他选项”，然后选择“不升级”。"
+          "注册邮箱、手机号和密码是后续找回账号的重要凭据。",
+          "记住注册时选择的国家或地区，后面账单地址必须与这个地区一致。",
+          "到这里账号注册已经完成，后面的步骤是为了让它能在 App Store 正常下载免费外区 App。"
         ]
       },
       {
         id: "apple-step-07",
         number: "07",
-        title: "备用方法：先注册国区账号，再改成外区",
-        description: "如果直接创建外区账号失败，可以先在苹果官网正常注册一个中国大陆 Apple ID，登录后再进入个人信息页面，把国家或地区改成美国等目标地区。",
+        title: "先准备 UU 加速器的 App Store 加速",
+        navTitle: "准备 UU 加速",
+        description: "进入 App Store 首次登录和验证前，建议先打开 UU 加速器，搜索 App Store 并开启加速，这样后续登录和账户验证更顺，不用反复清缓存重试。",
+        images: [
+          {
+            src: "assets/tutorial-images/apple-id/步骤06-01.jpg",
+            alt: "在 UU 加速器中搜索 App Store",
+            caption: "在 UU 加速器里搜索 App Store，找到对应的加速入口。"
+          },
+          {
+            src: "assets/tutorial-images/apple-id/步骤06-02.jpg",
+            alt: "UU 加速器实名认证提示",
+            caption: "如果 UU 加速器提示实名认证或海外用户登记，按自身情况处理后再继续。"
+          },
+          {
+            src: "assets/tutorial-images/apple-id/步骤06-03.jpg",
+            alt: "开启 App Store 加速",
+            caption: "开启 App Store 加速后，再回到 App Store 登录新注册的外区账号。"
+          },
+        ],
         tips: [
-          "这种方式属于曲线救国，适合直接外区注册一直失败的情况。",
-          "改区前请确认账号没有未完成订单、未用完余额或仍在生效的订阅。",
-          "改区过程中最容易卡在付款方式和账单地址。"
+          "这里不是让你在注册阶段开加速，注册阶段仍建议保持真实稳定网络。",
+          "UU 加速器的作用主要是帮助 App Store 首次登录、检查地区和触发 None 支付方式验证。",
+          "不要在系统设置里的 iCloud 登录外区 ID，只进入 App Store 操作。"
         ]
       },
       {
         id: "apple-step-08",
         number: "08",
-        title: "改区时让付款方式出现“无”",
-        description: "如果改区页面没有“无”这个付款方式选项，可以先去 App Store 下载“UU加速器”，开启“App Store 支付加速”功能，再回到改区流程。",
+        title: "只在 App Store 登录，并检查国家或地区",
+        navTitle: "登录 App Store",
+        description: "打开 App Store，点击右上角头像，先退出当前商店账号，再登录新注册的外区 Apple ID。登录成功后进入账户页面，优先检查 Country/Region 是否为你注册时选择的目标地区。",
+        images: [
+          {
+            src: "assets/tutorial-images/apple-id/步骤07-01退出登录.jpg",
+            alt: "在 App Store 退出当前账号",
+            caption: "在 App Store 账号页滑到底部，退出当前账号。"
+          },
+          {
+            src: "assets/tutorial-images/apple-id/步骤07-02登录成功.jpg",
+            alt: "外区 Apple ID 登录成功",
+            caption: "登录成功后进入 Account 页面，继续检查账号设置。"
+          },
+          {
+            src: "assets/tutorial-images/apple-id/步骤07-03检查账单地址.jpg",
+            alt: "进入 App Store 账户设置",
+            caption: "在 Account Settings 中检查 Country/Region 是否为目标地区。"
+          },
+          {
+            src: "assets/tutorial-images/apple-id/无法登录.jpg",
+            alt: "App Store 登录提示无法验证",
+            caption: "如果登录出现 Authentication Failed，可以先去 iCloud 网页登录验证，再退出 App Store、清除缓存后重新登录。"
+          }
+        ],
         tips: [
-          "关键目标是让付款方式里出现“无”。",
-          "如果没有“无”，不要硬填不可靠的信用卡资料。",
-          "不同系统版本和账号状态可能会导致页面略有差异。"
+          "App Store 登录只影响应用商店下载，不会替换你的 iCloud 主账号。",
+          "如果登录提示无法验证，先到 iCloud 官网登录一次完成验证，再回到 App Store 重试。",
+          "必要时退出 App Store，清除 App Store 缓存后重新登录。"
         ]
       },
       {
         id: "apple-step-09",
         number: "09",
-        title: "填写免税州账单地址",
-        description: "改成美区时，需要填写美国账单和寄送地址。建议使用美国地址生成器生成地址，并优先选择免税州，例如 Oregon（俄勒冈州）。",
+        title: "进入管理支付方式，先补全账单地址",
+        navTitle: "补全账单地址",
+        description: "进入 Manage Payments 后，如果暂时没有看到 None 或提示 Cannot verify this payment method，不要慌。先点进账单地址，把街道、邮编、城市、电话等必填项补全，地址必须与账号国家或地区一致。",
+        images: [
+          {
+            src: "assets/tutorial-images/apple-id/步骤07-03检查账单地址.jpg",
+            alt: "进入 Account Settings 的 Manage Payments",
+            caption: "在 Account Settings 中进入 Manage Payments。"
+          },
+          {
+            src: "assets/tutorial-images/apple-id/步骤07-04检查账单地址.jpg",
+            alt: "查看账单地址",
+            caption: "如果已有 Billing Address，先点进去检查信息是否完整。"
+          },
+          {
+            src: "assets/tutorial-images/apple-id/步骤07-05编辑地址.jpg",
+            alt: "编辑账单地址",
+            caption: "看到必填项缺失时，点击 Edit 后补全地址。"
+          },
+          {
+            src: "assets/tutorial-images/apple-id/步骤07-06地址生成器.jpg",
+            alt: "使用地址生成器生成地址",
+            caption: "地址生成器只作格式参考，实际要选择与 Apple ID 国家或地区一致的地址。"
+          },
+          {
+            src: "assets/tutorial-images/apple-id/步骤07-07保存地址.jpg",
+            alt: "保存完整账单地址",
+            caption: "街道、邮编、城市和电话补全后，点击 Done 保存。"
+          }
+        ],
         tips: [
-          "选择免税州可以减少后续购买 App、订阅或兑换礼品卡时遇到的税费。",
-          "地址信息要保持格式完整，包括街道、城市、州、邮编和电话。",
-          "不要频繁更改账单地址和国家地区。"
+          "没有 None 时先不要硬填信用卡，也不要急着换账号。",
+          "地址必须匹配账号地区，例如土区账号填土耳其地址，美区账号填美国地址。",
+          "保存地址后再去下载免费外区 App，很多时候 None 会在首次验证流程里出现。"
         ]
       },
       {
         id: "apple-step-10",
         number: "10",
-        title: "遇到风控时的备用方案",
-        description: "如果你反复遇到无法创建账户、手机号不可用、验证卡住等问题，可以暂停操作，隔天换真实网络环境再试。没有多余手机号时，也有人会选择第三方成品账号。",
+        title: "下载免费外区 App，触发首次账户验证并选择 None",
+        navTitle: "选择 None",
+        description: "账单地址保存后，去下载任意一款免费的外区 App，例如 ChatGPT。第一次下载时通常会弹出 Review 或 Complete your Apple Account，根据提示进入账户验证页面，选择 None 作为支付方式，并确认刚才保存的账单地址。",
+        images: [
+          {
+            src: "assets/tutorial-images/apple-id/步骤08-01下载应用校验.jpg",
+            alt: "下载免费 App 时触发 Review 验证",
+            caption: "首次下载免费 App 时，点击 Review 进入账户信息验证。"
+          },
+          {
+            src: "assets/tutorial-images/apple-id/步骤08-02 支付方式none.jpg",
+            alt: "选择 None 支付方式",
+            caption: "在 Payment Method 中选择 None，然后确认账单地址。"
+          },
+          {
+            src: "assets/tutorial-images/apple-id/步骤08-02 下载应用.jpg",
+            alt: "开始下载免费外区 App",
+            caption: "验证完成后，免费 App 就可以正常下载。"
+          }
+        ],
         tips: [
-          "第三方成品账号存在安全、找回、封号和售后风险，务必自行判断。",
-          "如果购买成品账号，不要把它登录到系统设置里的 iCloud。",
-          "更稳妥的方式仍然是用自己的邮箱和手机号完成正常注册。"
+          "如果这里仍然没有 None，优先检查 UU 加速器的 App Store 加速是否已经开启。",
+          "不要为了跳过验证随便填不可靠的信用卡资料。",
+          "不同地区界面语言可能不同，但核心逻辑都是先 Review，再选择 None，再保存地址。"
+        ]
+      },
+      {
+        id: "apple-step-11",
+        number: "11",
+        title: "备用方法：先注册国区账号，再改成外区",
+        navTitle: "备用改区",
+        description: "如果你直接注册目标地区账号一直失败，可以先正常注册一个中国大陆 Apple ID，登录后再进入个人信息页面，把国家或地区改成目标地区。这个方法放在最后，只作为注册失败时的备用方案。",
+        tips: [
+          "主线仍然推荐直接注册目标地区账号，再按前面流程完成 App Store 首次验证。",
+          "改区前请确认账号没有未完成订单、未用完余额或仍在生效的订阅。",
+          "改区过程中最容易卡在付款方式和账单地址，仍可参考前面的 UU、地址补全和 None 验证思路。"
         ]
       }
     ],
     followUps: {
       title: "使用外区 Apple ID 的长期注意事项",
-      description: "外区 ID 创建成功后，真正容易出问题的不是下载应用，而是错误登录、频繁切区和安全升级弹窗处理不当。",
+      description: "外区 ID 创建成功后，真正容易出问题的不是下载应用，而是错误登录、地区和地址不一致、频繁切区以及安全升级弹窗处理不当。",
       items: [
         {
           title: "只用于 App Store",

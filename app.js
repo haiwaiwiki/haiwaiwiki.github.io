@@ -272,7 +272,7 @@ function renderDetail(article) {
     ${article.steps?.length ? `
       <nav class="floating-toc" aria-label="步骤导航">
         <strong>步骤导航</strong>
-        ${article.steps.map((step) => `<button type="button" class="toc-link" data-step-id="${step.id}">${step.number} ${step.title}</button>`).join("")}
+        ${article.steps.map((step) => `<button type="button" class="toc-link" data-step-id="${step.id}">${step.number} ${step.navTitle || step.title}</button>`).join("")}
       </nav>
     ` : ""}
     <div class="article-shell">
