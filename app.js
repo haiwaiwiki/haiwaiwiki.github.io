@@ -211,7 +211,7 @@ function renderStep(step) {
   const galleryLayout = step.imageLayout || images[0]?.layout || "phone";
   const galleryId = `${step.id}-gallery`;
   return `
-    <section class="step-card ${hasImage ? "" : "text-only"} ${hasGallery ? "has-gallery" : ""}" id="${step.id}">
+    <section class="step-card layout-${galleryLayout} ${hasImage ? "" : "text-only"} ${hasGallery ? "has-gallery" : ""}" id="${step.id}">
       <div class="step-copy">
         <div class="step-head">
           <span>${step.number}</span>

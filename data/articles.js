@@ -11,7 +11,7 @@ window.GUIDE_ARTICLES = [
     difficulty: "简单",
     riskLevel: "低",
     updatedAt: "2026-05-11",
-    duration: "10-20 分钟",
+    duration: "5-10 分钟",
     targetUsers: [
       "第一次注册 Google 账号的新手用户",
       "不知道从哪里进入 Google 注册入口的用户",
@@ -177,7 +177,7 @@ window.GUIDE_ARTICLES = [
     difficulty: "中等",
     riskLevel: "中",
     updatedAt: "2026-05-12",
-    duration: "20-40 分钟",
+    duration: "10-20 分钟",
     targetUsers: [
       "需要下载国区 App Store 没有的应用的新手用户",
       "需要使用 ChatGPT、Gemini 等海外 AI 应用的用户",
@@ -525,7 +525,7 @@ window.GUIDE_ARTICLES = [
     difficulty: "中等",
     riskLevel: "高",
     updatedAt: "2026-05-12",
-    duration: "30-60 分钟",
+    duration: "10-15 分钟",
     targetUsers: [
       "已经拥有外区 Apple ID 的用户",
       "想了解 iTunes Gift Card 充值和 App Store 订阅流程的用户",
@@ -773,10 +773,20 @@ window.GUIDE_ARTICLES = [
         navTitle: "兑换礼品卡",
         imageLayout: "phone",
         description: "打开 App Store，进入账户页面，选择兑换礼品卡或代码，将购买到的兑换码输入进去。兑换前确认当前 App Store 登录的是目标土区 Apple ID。",
-        image: "assets/tutorial-images/chatgpt-subscription-tr/步骤08.png",
-        imageFallback: "assets/placeholder.svg",
-        imageAlt: "在 App Store 兑换礼品卡",
-        imageCaption: "兑换前确认当前 App Store 登录的是目标外区 Apple ID。",
+        images: [
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/步骤八01兑换礼品卡.jpg",
+            fallback: "assets/placeholder.svg",
+            alt: "在 App Store 账户页面选择兑换礼品卡或代码",
+            caption: "进入 App Store 账户页面后，选择兑换礼品卡或代码。"
+          },
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/步骤八02输入代码.jpg",
+            fallback: "assets/placeholder.svg",
+            alt: "输入 Apple 礼品卡兑换代码",
+            caption: "输入礼品卡兑换码前，确认当前 App Store 登录的是目标外区 Apple ID。"
+          }
+        ],
         tips: [
           "一定要确认 Apple ID 地区和礼品卡地区一致。",
           "兑换码截图必须打码。",
@@ -790,7 +800,7 @@ window.GUIDE_ARTICLES = [
         navTitle: "确认余额",
         imageLayout: "phone",
         description: "兑换成功后，在 App Store 账户页面确认余额是否到账。余额到账后才建议继续订阅，不要在余额未显示时反复尝试付款。",
-        image: "assets/tutorial-images/chatgpt-subscription-tr/步骤09.png",
+        image: "assets/tutorial-images/chatgpt-subscription-tr/步骤九01确认余额.jpg",
         imageFallback: "assets/placeholder.svg",
         imageAlt: "确认 Apple ID 余额",
         imageCaption: "余额到账后才可以继续订阅。",
@@ -807,10 +817,20 @@ window.GUIDE_ARTICLES = [
         navTitle: "订阅 Plus",
         imageLayout: "phone",
         description: "打开 ChatGPT App，登录自己的 ChatGPT 账号，在订阅页面选择 ChatGPT Plus，并通过 App Store 余额完成订阅。订阅价格和页面样式以 App 内实际显示为准。",
-        image: "assets/tutorial-images/chatgpt-subscription-tr/步骤10.png",
-        imageFallback: "assets/placeholder.svg",
-        imageAlt: "通过 ChatGPT App 订阅 Plus",
-        imageCaption: "订阅价格和页面样式以 ChatGPT App 内实际显示为准。",
+        images: [
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/步骤十 01升级plus.jpg",
+            fallback: "assets/placeholder.svg",
+            alt: "在 ChatGPT App 进入升级 Plus 页面",
+            caption: "打开 ChatGPT App 后，进入 Plus 升级页面，价格以 App 内实际显示为准。"
+          },
+          {
+            src: "assets/tutorial-images/chatgpt-subscription-tr/步骤十 02升级plus.jpg",
+            fallback: "assets/placeholder.svg",
+            alt: "通过 App Store 弹窗确认 ChatGPT Plus 订阅",
+            caption: "订阅过程以 App Store 弹窗显示为准，确认余额和账号状态后再继续。"
+          }
+        ],
         tips: [
           "订阅前确认 Apple ID 余额足够。",
           "订阅过程以 App Store 弹窗显示为准。",
@@ -824,7 +844,7 @@ window.GUIDE_ARTICLES = [
         navTitle: "检查状态",
         imageLayout: "phone",
         description: "订阅完成后，回到 ChatGPT App 检查 Plus 状态是否生效。如果没有立即生效，可以重新打开 App、重新登录账号，或稍后再看。",
-        image: "assets/tutorial-images/chatgpt-subscription-tr/步骤11.png",
+        image: "assets/tutorial-images/chatgpt-subscription-tr/步骤十一检查订阅.jpg",
         imageFallback: "assets/placeholder.svg",
         imageAlt: "检查 ChatGPT Plus 状态",
         imageCaption: "如果没有立即生效，可以重新登录或稍后再看。",
@@ -841,7 +861,7 @@ window.GUIDE_ARTICLES = [
         navTitle: "取消续订",
         imageLayout: "phone",
         description: "如果不想下个月自动扣费，可以进入 App Store 的订阅管理页面，找到 ChatGPT 订阅并取消自动续订。取消自动续订后，已付费周期内通常仍可继续使用。",
-        image: "assets/tutorial-images/chatgpt-subscription-tr/步骤12.png",
+        image: "assets/tutorial-images/chatgpt-subscription-tr/步骤十二 取消订阅.jpg",
         imageFallback: "assets/placeholder.svg",
         imageAlt: "取消 ChatGPT 自动续订",
         imageCaption: "取消自动续订后，已付费周期内通常仍可继续使用。",

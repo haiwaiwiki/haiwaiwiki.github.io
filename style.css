@@ -957,6 +957,10 @@ button {
   grid-template-columns: 1fr;
 }
 
+.step-card.has-gallery.layout-phone {
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+}
+
 .step-copy {
   min-width: 0;
 }
@@ -1059,6 +1063,33 @@ button {
 .step-gallery.layout-phone.single {
   max-width: 380px;
   justify-self: end;
+}
+
+.step-gallery.layout-phone.multi {
+  max-width: 360px;
+  justify-self: end;
+  align-self: start;
+}
+
+.step-gallery.layout-phone .gallery-toolbar {
+  margin-bottom: 8px;
+}
+
+.step-gallery.layout-phone .gallery-stage {
+  border: 0;
+  border-radius: 18px;
+  background: transparent;
+}
+
+.step-gallery.layout-phone .step-visual {
+  background: #fff;
+}
+
+.step-gallery.layout-phone .step-visual img,
+.step-visual.layout-phone img {
+  height: 600px;
+  object-fit: contain;
+  background: #fff;
 }
 
 .step-visual.layout-phone.is-missing {
@@ -1379,7 +1410,7 @@ button {
 
 @media (min-width: 1200px) {
   .step-gallery.layout-phone.multi .step-visual img {
-    height: 320px;
+    height: 600px;
   }
 
   .step-gallery.layout-wide .step-visual img {
@@ -1549,6 +1580,10 @@ button {
     border-radius: 18px;
   }
 
+  .step-card.has-gallery.layout-phone {
+    grid-template-columns: 1fr;
+  }
+
   .step-gallery.multi {
     display: block;
   }
@@ -1566,6 +1601,17 @@ button {
   .step-gallery.layout-phone.single {
     max-width: none;
     justify-self: stretch;
+  }
+
+  .step-gallery.layout-phone.multi {
+    max-width: none;
+    justify-self: stretch;
+  }
+
+  .step-gallery.layout-phone .step-visual img,
+  .step-visual.layout-phone img {
+    height: auto;
+    max-height: 680px;
   }
 
   .step-visual.layout-phone.is-missing img {
