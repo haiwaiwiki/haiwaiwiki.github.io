@@ -3,7 +3,11 @@ const articles = window.GUIDE_ARTICLES || [];
 const groupNames = {
   account: "账号注册",
   region: "地区与商店",
-  subscription: "订阅与支付"
+  subscription: "订阅与支付",
+  ai: "AI 工具",
+  security: "安全与找回",
+  benefits: "活动与福利",
+  risk: "风险说明"
 };
 
 const statusNames = {
@@ -19,9 +23,29 @@ const riskNames = {
   "高": "高风险"
 };
 
+const articleOrder = [
+  "gmail-app-google-account-register-mainland",
+  "google-account-settings-checklist",
+  "apple-id-region",
+  "turkey-gpt-subscription",
+  "google-ai-pro-pixel-offer"
+];
+
+const categoryEntries = [
+  { key: "account", title: "账号注册", description: "Google、Apple ID 等基础账号创建与准备。" },
+  { key: "region", title: "地区与商店", description: "外区账号、商店地区、账单资料和使用边界。" },
+  { key: "subscription", title: "订阅与支付", description: "礼品卡、App Store 订阅和续订管理。" },
+  { key: "ai", title: "AI 工具", description: "ChatGPT、Gemini、AI Studio 等工具相关教程。" },
+  { key: "security", title: "安全与找回", description: "账号体检、恢复方式、两步验证和排查清单。" },
+  { key: "benefits", title: "活动与福利", description: "官方活动、试用资格和领取注意事项。" },
+  { key: "risk", title: "风险说明", description: "高风险流程、第三方平台和账号安全提醒。" }
+];
+
 const state = {
   query: "",
   filter: "all",
+  category: "all",
+  sort: "latest",
   view: "grid"
 };
 
@@ -30,8 +54,11 @@ let tocObserver = null;
 const homeView = document.querySelector("#home-view");
 const detailView = document.querySelector("#detail-view");
 const cardGrid = document.querySelector("#card-grid");
-const searchInput = document.querySelector("#search-input");
+const searchInputs = document.querySelectorAll(".search-input");
 const resultCount = document.querySelector("#result-count");
+const categoryGrid = document.querySelector("#category-grid");
+const recommendedGrid = document.querySelector("#recommended-grid");
+const sortSelect = document.querySelector("#sort-select");
 const viewButtons = document.querySelectorAll(".view-button");
 const imagePreview = document.createElement("div");
 
@@ -46,11 +73,80 @@ imagePreview.innerHTML = `
 `;
 document.body.appendChild(imagePreview);
 
+function uniqueList(items) {
+  return [...new Set((items || []).filter(Boolean))];
+}
+
+function articleIndex(article) {
+  const index = Number.isFinite(article.order) ? article.order : articleOrder.indexOf(article.id);
+  return index === -1 ? 999 : index;
+}
+
+function getArticleTags(article) {
+  return uniqueList([
+    ...(article.tags || []),
+    article.category,
+    groupNames[article.group],
+    article.difficulty,
+    article.status === "high-risk" ? "高风险提示" : "",
+    article.riskLevel === "高" ? "高风险" : ""
+  ]).slice(0, 5);
+}
+
+function getArticleKeywords(article) {
+  return uniqueList([
+    ...(article.keywords || []),
+    ...(article.tags || []),
+    article.category,
+    groupNames[article.group]
+  ]);
+}
+
+function getArticleCategories(article) {
+  const text = [
+    article.id,
+    article.title,
+    article.description,
+    article.category,
+    article.group,
+    ...(article.tags || []),
+    ...(article.keywords || [])
+  ].join(" ").toLowerCase();
+
+  const categories = new Set();
+  if (article.group) categories.add(article.group);
+  if (text.includes("google") || text.includes("账号注册") || text.includes("apple id")) categories.add("account");
+  if (article.group === "region" || text.includes("地区") || text.includes("商店") || text.includes("app store")) categories.add("region");
+  if (article.group === "subscription" || text.includes("订阅") || text.includes("支付") || text.includes("礼品卡")) categories.add("subscription");
+  if (text.includes("ai") || text.includes("gpt") || text.includes("gemini") || text.includes("chatgpt") || text.includes("studio") || text.includes("antigravity")) categories.add("ai");
+  if (text.includes("安全") || text.includes("找回") || text.includes("排查") || text.includes("恢复") || text.includes("两步验证")) categories.add("security");
+  if (text.includes("活动") || text.includes("福利") || text.includes("pixel") || text.includes("试用")) categories.add("benefits");
+  if (article.status === "high-risk" || article.riskLevel === "高" || text.includes("风险")) categories.add("risk");
+  return [...categories];
+}
+
+function isRecommended(article) {
+  return article.recommended === true || article.featured === true || [
+    "gmail-app-google-account-register-mainland",
+    "google-account-settings-checklist",
+    "apple-id-region",
+    "turkey-gpt-subscription"
+  ].includes(article.id);
+}
+
+function riskRank(article) {
+  return { "高": 3, "中": 2, "低": 1 }[article.riskLevel] || 0;
+}
+
 function isMatchFilter(article) {
+  if (state.category !== "all" && !getArticleCategories(article).includes(state.category)) return false;
   if (state.filter === "all") return true;
-  if (state.filter === "available") return article.status === "available" || article.status === "high-risk";
-  if (state.filter === "draft" || state.filter === "not-recommended") return article.status === state.filter;
-  return article.group === state.filter;
+
+  const [type, value] = state.filter.split(":");
+  if (type === "status") return article.status === value;
+  if (type === "difficulty") return article.difficulty === value;
+  if (type === "risk") return article.riskLevel === value;
+  return getArticleCategories(article).includes(state.filter);
 }
 
 function isMatchQuery(article) {
@@ -62,6 +158,8 @@ function isMatchQuery(article) {
     article.description,
     article.summary,
     article.category,
+    ...(article.tags || []),
+    ...(article.keywords || []),
     article.status,
     article.difficulty,
     article.riskLevel,
@@ -85,6 +183,9 @@ function isMatchQuery(article) {
     ]),
     ...(article.riskWarnings || []).flatMap((risk) => [risk.title, risk.description]),
     ...(article.faq || []).flatMap((item) => [item.question, item.answer]),
+    article.quickChecklist?.title,
+    article.quickChecklist?.description,
+    ...(article.quickChecklist?.items || []),
     ...(article.steps || []).flatMap((step) => [
       step.title,
       step.description,
@@ -100,8 +201,31 @@ function isMatchQuery(article) {
   return text.includes(query);
 }
 
+function sortArticles(list) {
+  return list.sort((a, b) => {
+    if (state.sort === "recommended") {
+      const recDiff = Number(isRecommended(b)) - Number(isRecommended(a));
+      if (recDiff) return recDiff;
+      return articleIndex(a) - articleIndex(b);
+    }
+    if (state.sort === "risk") {
+      const diff = riskRank(b) - riskRank(a);
+      if (diff) return diff;
+      return articleIndex(a) - articleIndex(b);
+    }
+    if (state.sort === "category") {
+      const diff = String(a.category || "").localeCompare(String(b.category || ""), "zh-Hans-CN");
+      if (diff) return diff;
+      return articleIndex(a) - articleIndex(b);
+    }
+    const dateDiff = new Date(b.updatedAt) - new Date(a.updatedAt);
+    if (dateDiff) return dateDiff;
+    return articleIndex(a) - articleIndex(b);
+  });
+}
+
 function getFilteredArticles() {
-  return articles.filter((article) => isMatchFilter(article) && isMatchQuery(article));
+  return sortArticles(articles.filter((article) => isMatchFilter(article) && isMatchQuery(article)));
 }
 
 function articleUrl(id) {
@@ -147,18 +271,9 @@ window.handleImageError = function handleImageError(img) {
   img.dataset.previewSrc = "assets/placeholder.svg";
 };
 
-function renderHome() {
-  const filtered = getFilteredArticles();
-  resultCount.textContent = `${filtered.length} 篇`;
-  cardGrid.classList.toggle("card-grid", state.view === "grid");
-  cardGrid.classList.toggle("guide-list", state.view === "list");
-
-  if (!filtered.length) {
-    cardGrid.innerHTML = `<div class="empty-state">没有找到匹配教程。</div>`;
-    return;
-  }
-
-  cardGrid.innerHTML = filtered.map((article) => `
+function renderArticleCard(article) {
+  const tags = getArticleTags(article);
+  return `
     <a class="guide-card ${article.coverMode === "cover" ? "cover-fill" : ""}" href="${articleUrl(article.id)}">
       <div class="card-cover">
         <img ${imageAttrs(article.cover, article.coverFallback)} alt="${article.title}">
@@ -172,13 +287,56 @@ function renderHome() {
         </div>
         <h2>${article.title}</h2>
         <p>${article.description || article.summary}</p>
+        ${tags.length ? `<div class="tag-row">${tags.map((tag) => `<span>${tag}</span>`).join("")}</div>` : ""}
         <div class="card-foot">
           <span>${article.category} · ${article.updatedAt}</span>
           <b>查看详情</b>
         </div>
       </div>
     </a>
-  `).join("");
+  `;
+}
+
+function renderCategoryGrid() {
+  if (!categoryGrid) return;
+  categoryGrid.innerHTML = categoryEntries.map((category) => {
+    const count = articles.filter((article) => getArticleCategories(article).includes(category.key)).length;
+    return `
+      <button class="category-card ${state.category === category.key ? "active" : ""}" type="button" data-category="${category.key}">
+        <span>${category.title}</span>
+        <strong>${count} 篇</strong>
+        <p>${category.description}</p>
+      </button>
+    `;
+  }).join("");
+}
+
+function renderRecommended() {
+  if (!recommendedGrid) return;
+  const recommended = articles
+    .filter((article) => isRecommended(article) && isMatchQuery(article))
+    .sort((a, b) => articleIndex(a) - articleIndex(b))
+    .slice(0, 6);
+  recommendedGrid.innerHTML = recommended.length
+    ? recommended.map(renderArticleCard).join("")
+    : `<div class="empty-state">没有找到匹配的推荐教程。</div>`;
+}
+
+function renderHome() {
+  renderCategoryGrid();
+  renderRecommended();
+
+  const filtered = getFilteredArticles();
+  resultCount.textContent = `${filtered.length} 篇`;
+  cardGrid.classList.toggle("card-grid", state.view === "grid");
+  cardGrid.classList.toggle("guide-list", state.view === "list");
+
+  if (!filtered.length) {
+    cardGrid.innerHTML = `<div class="empty-state">没有找到匹配教程。</div>`;
+    return;
+  }
+
+  cardGrid.innerHTML = filtered.map(renderArticleCard).join("");
 }
 
 function renderNotice(notice) {
@@ -408,6 +566,24 @@ function renderRiskWarnings(risks) {
   `;
 }
 
+function renderQuickChecklist(checklist) {
+  if (!checklist?.items?.length) return "";
+  return `
+    <section class="checklist-section">
+      <h2>${checklist.title}</h2>
+      ${checklist.description ? `<p>${checklist.description}</p>` : ""}
+      <div class="checklist-grid">
+        ${checklist.items.map((item) => `
+          <div class="checklist-item">
+            <span aria-hidden="true">✓</span>
+            <p>${item}</p>
+          </div>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
 function renderFaq(faq) {
   if (!faq?.length) return "";
   return `
@@ -526,6 +702,7 @@ function renderDetail(article) {
           ` : `<div class="empty-state">这篇教程还在整理中。</div>`}
 
           ${renderFollowUps(article.followUps)}
+          ${renderQuickChecklist(article.quickChecklist)}
           ${renderRiskWarnings(article.riskWarnings)}
           ${renderFaq(article.faq)}
         </div>
@@ -561,33 +738,28 @@ function closeImagePreview() {
   document.body.classList.remove("preview-open");
 }
 
-function route() {
-  const hash = decodeURIComponent(window.location.hash || "#/");
+function homeUrl() {
+  return window.location.pathname || "./";
+}
+
+function getRouteArticleId() {
   const queryArticleId = new URLSearchParams(window.location.search).get("article");
-  const hashMatch = hash.match(/^#\/article\/(.+)$/);
-  const articleId = queryArticleId || hashMatch?.[1];
+  if (queryArticleId) return queryArticleId;
 
-  if (articleId) {
-    const article = articles.find((item) => item.id === articleId);
-    if (article) {
-      document.body.classList.add("article-open");
-      homeView.hidden = true;
-      detailView.hidden = false;
-      renderDetail(article);
-      emitRouteChange({
-        type: "article",
-        path: window.location.pathname + window.location.search + window.location.hash,
-        title: article.title,
-        articleId: article.id
-      });
-      window.scrollTo(0, 0);
-      return;
-    }
-  }
+  const hash = decodeURIComponent(window.location.hash || "");
+  const hashMatch = hash.match(/^#\/article\/([^/?#]+)$/);
+  return hashMatch?.[1] || "";
+}
 
+function getArticleById(articleId) {
+  return articles.find((item) => item.id === articleId);
+}
+
+function showHome() {
   document.body.classList.remove("article-open");
   homeView.hidden = false;
   detailView.hidden = true;
+  detailView.innerHTML = "";
   detailView.classList.remove("has-floating-toc");
   cleanupTocObserver();
   renderHome();
@@ -599,9 +771,52 @@ function route() {
   window.scrollTo(0, 0);
 }
 
-function navigateTo(url) {
+function showArticle(article) {
+  document.body.classList.add("article-open");
+  homeView.hidden = true;
+  detailView.hidden = false;
+  renderDetail(article);
+  emitRouteChange({
+    type: "article",
+    path: window.location.pathname + window.location.search + window.location.hash,
+    title: article.title,
+    articleId: article.id
+  });
+  window.scrollTo(0, 0);
+}
+
+function route() {
+  const articleId = getRouteArticleId();
+
+  if (articleId) {
+    const article = getArticleById(articleId);
+    if (article) {
+      showArticle(article);
+      return;
+    }
+
+    window.history.replaceState({}, "", homeUrl());
+  }
+
+  showHome();
+}
+
+function navigateHome(options = {}) {
+  const method = options.replace ? "replaceState" : "pushState";
+  window.history[method]({}, "", homeUrl());
+  showHome();
+}
+
+function navigateArticle(articleId) {
+  const article = getArticleById(articleId);
+  if (!article) {
+    navigateHome({ replace: true });
+    return;
+  }
+
+  const url = `${homeUrl()}?article=${encodeURIComponent(article.id)}`;
   window.history.pushState({}, "", url);
-  route();
+  showArticle(article);
 }
 
 document.querySelectorAll(".filter-chip").forEach((button) => {
@@ -613,9 +828,14 @@ document.querySelectorAll(".filter-chip").forEach((button) => {
   });
 });
 
-searchInput.addEventListener("input", (event) => {
-  state.query = event.target.value;
-  renderHome();
+searchInputs.forEach((input) => {
+  input.addEventListener("input", (event) => {
+    state.query = event.target.value;
+    searchInputs.forEach((item) => {
+      if (item !== event.target) item.value = state.query;
+    });
+    renderHome();
+  });
 });
 
 viewButtons.forEach((button) => {
@@ -626,6 +846,23 @@ viewButtons.forEach((button) => {
     renderHome();
   });
 });
+
+if (sortSelect) {
+  sortSelect.addEventListener("change", (event) => {
+    state.sort = event.target.value;
+    renderHome();
+  });
+}
+
+if (categoryGrid) {
+  categoryGrid.addEventListener("click", (event) => {
+    const card = event.target.closest("[data-category]");
+    if (!card) return;
+    state.category = state.category === card.dataset.category ? "all" : card.dataset.category;
+    renderHome();
+    document.querySelector(".all-guides-block")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
 
 detailView.addEventListener("click", (event) => {
   const control = event.target.closest("[data-gallery-action]");
@@ -666,12 +903,20 @@ document.addEventListener("click", (event) => {
   const url = new URL(link.href, window.location.href);
   if (url.origin !== window.location.origin) return;
 
-  const isArticleLink = url.searchParams.has("article");
   const isHomeLink = link.classList.contains("brand") || link.classList.contains("back-button");
-  if (!isArticleLink && !isHomeLink) return;
+  const queryArticleId = url.searchParams.get("article");
+  const hashMatch = decodeURIComponent(url.hash || "").match(/^#\/article\/([^/?#]+)$/);
+  const articleId = queryArticleId || hashMatch?.[1] || "";
+
+  if (!articleId && !isHomeLink) return;
 
   event.preventDefault();
-  navigateTo(isHomeLink ? "./" : `${url.pathname}${url.search}${url.hash}`);
+  if (isHomeLink) {
+    navigateHome({ replace: true });
+    return;
+  }
+
+  navigateArticle(articleId);
 });
 
 imagePreview.addEventListener("click", (event) => {

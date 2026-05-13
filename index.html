@@ -18,38 +18,67 @@
       <span class="brand-mark"><img src="assets/tutorial-images/public/logo.png" alt="海外服务使用指南"></span>
       <strong>海外服务使用指南</strong>
     </a>
+    <label class="topbar-search">
+      <input class="search-input" type="search" placeholder="搜索：Google、Apple ID、GPT、手机号、验证码、订阅">
+    </label>
   </header>
 
   <main class="page">
     <section id="home-view" class="home-view">
-      <section class="control-panel">
+      <section class="directory-search">
         <label class="search-box">
-          <input id="search-input" type="search" placeholder="搜索：Google、Apple ID、GPT、手机号、验证码、订阅">
+          <input class="search-input" type="search" placeholder="搜索：Google、Apple ID、GPT、手机号、验证码、订阅">
         </label>
-
-        <div class="filter-row" aria-label="教程筛选">
-          <button class="filter-chip active" data-filter="all">全部</button>
-          <button class="filter-chip" data-filter="account">账号注册</button>
-          <button class="filter-chip" data-filter="region">地区与商店</button>
-          <button class="filter-chip" data-filter="subscription">订阅与支付</button>
-          <button class="filter-chip" data-filter="available">可用</button>
-          <button class="filter-chip" data-filter="draft">待完善</button>
-          <button class="filter-chip" data-filter="not-recommended">不推荐</button>
-        </div>
       </section>
 
-      <div class="section-title">
-        <h1>全部教程</h1>
-        <div class="title-tools">
-          <span id="result-count">0 篇</span>
-          <div class="view-switch" aria-label="展示方式">
-            <button class="view-button active" type="button" data-view="grid">卡片</button>
-            <button class="view-button" type="button" data-view="list">列表</button>
+      <section class="directory-block">
+        <div class="directory-heading">
+          <h2>按分类查找</h2>
+        </div>
+        <div id="category-grid" class="category-grid"></div>
+      </section>
+
+      <section class="directory-block">
+        <div class="directory-heading">
+          <h2>推荐先看</h2>
+        </div>
+        <section id="recommended-grid" class="recommended-grid"></section>
+      </section>
+
+      <section class="directory-block all-guides-block">
+        <div class="filter-row" aria-label="教程筛选">
+          <button class="filter-chip active" data-filter="all">全部</button>
+          <button class="filter-chip" data-filter="status:available">可用</button>
+          <button class="filter-chip" data-filter="status:draft">待完善</button>
+          <button class="filter-chip" data-filter="status:high-risk">高风险提示</button>
+          <button class="filter-chip" data-filter="status:not-recommended">不推荐</button>
+          <button class="filter-chip" data-filter="difficulty:简单">简单</button>
+          <button class="filter-chip" data-filter="difficulty:中等">中等</button>
+          <button class="filter-chip" data-filter="risk:高">高风险</button>
+        </div>
+
+        <div class="section-title">
+          <h1>全部教程</h1>
+          <div class="title-tools">
+            <span id="result-count">0 篇</span>
+            <label class="sort-select">
+              <span>排序</span>
+              <select id="sort-select">
+                <option value="latest">最新更新</option>
+                <option value="recommended">推荐优先</option>
+                <option value="risk">风险等级</option>
+                <option value="category">分类</option>
+              </select>
+            </label>
+            <div class="view-switch" aria-label="展示方式">
+              <button class="view-button active" type="button" data-view="grid">卡片</button>
+              <button class="view-button" type="button" data-view="list">列表</button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <section id="card-grid" class="guide-results card-grid"></section>
+        <section id="card-grid" class="guide-results card-grid"></section>
+      </section>
     </section>
 
     <article id="detail-view" class="detail-view" hidden></article>
