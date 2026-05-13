@@ -9,7 +9,8 @@ const groupNames = {
 const statusNames = {
   available: "可用",
   draft: "待完善",
-  "high-risk": "高风险提示"
+  "high-risk": "高风险提示",
+  "not-recommended": "不推荐"
 };
 
 const riskNames = {
@@ -48,7 +49,7 @@ document.body.appendChild(imagePreview);
 function isMatchFilter(article) {
   if (state.filter === "all") return true;
   if (state.filter === "available") return article.status === "available" || article.status === "high-risk";
-  if (state.filter === "draft") return article.status === state.filter;
+  if (state.filter === "draft" || state.filter === "not-recommended") return article.status === state.filter;
   return article.group === state.filter;
 }
 
@@ -110,14 +111,16 @@ function webpSrc(src) {
 
 function imageAttrs(src, fallback, loading = "lazy", defer = false) {
   const safeFallback = fallback || "assets/placeholder.svg";
-  const fallbackSrc = webpSrc(safeFallback) || safeFallback;
-  const displaySrc = webpSrc(src) || fallbackSrc;
+  const originalSrc = src || safeFallback;
+  const finalFallback = safeFallback;
+  const displaySrc = webpSrc(src) || webpSrc(safeFallback) || safeFallback;
   const loadAttrs = loading ? ` loading="${loading}"` : "";
-  const previewSrc = src || safeFallback;
+  const previewSrc = originalSrc;
+  const firstFallback = displaySrc !== originalSrc ? originalSrc : finalFallback;
   if (defer) {
-    return `src="${fallbackSrc}" data-src="${displaySrc}" data-preview-src="${previewSrc}" data-original-src="${src || safeFallback}" data-original-fallback="${safeFallback}" data-fallback="${fallbackSrc}" decoding="async"${loadAttrs} onerror="handleImageError(this)"`;
+    return `src="${firstFallback}" data-src="${displaySrc}" data-preview-src="${previewSrc}" data-original-src="${originalSrc}" data-original-fallback="${finalFallback}" data-fallback="${firstFallback}" decoding="async"${loadAttrs} onerror="handleImageError(this)"`;
   }
-  return `src="${displaySrc}" data-preview-src="${previewSrc}" data-original-src="${src || safeFallback}" data-original-fallback="${safeFallback}" data-fallback="${fallbackSrc}" decoding="async"${loadAttrs} onerror="handleImageError(this)"`;
+  return `src="${displaySrc}" data-preview-src="${previewSrc}" data-original-src="${originalSrc}" data-original-fallback="${finalFallback}" data-fallback="${firstFallback}" decoding="async"${loadAttrs} onerror="handleImageError(this)"`;
 }
 
 window.handleImageError = function handleImageError(img) {
@@ -161,7 +164,7 @@ function renderHome() {
           <span class="badge ${article.status}">${statusNames[article.status] || article.status}</span>
           <span class="badge category-badge">${article.category}</span>
           <span class="badge">${article.difficulty}</span>
-          <span class="badge risk-${article.riskLevel}">${riskNames[article.riskLevel] || article.riskLevel}</span>
+          ${article.hideRiskLevel ? "" : `<span class="badge risk-${article.riskLevel}">${riskNames[article.riskLevel] || article.riskLevel}</span>`}
         </div>
         <h2>${article.title}</h2>
         <p>${article.description || article.summary}</p>
@@ -178,6 +181,17 @@ function renderNotice(notice) {
   return `<div class="notice ${notice.type || "info"}">${notice.text}</div>`;
 }
 
+function renderHighRiskNotice(article) {
+  if (article.status !== "high-risk") return "";
+  return `
+    <section class="high-risk-card">
+      <h2>高风险提示</h2>
+      <p>本教程涉及账号地区、订阅支付、礼品卡或第三方平台信息，可能受到平台政策、账号状态、支付环境和地区限制影响。本站只做公开流程说明和风险避坑参考，不保证任何账号、付款方式或第三方服务一定可用。</p>
+      <p>请勿把密码、验证码、二步验证密钥、支付信息、订单信息或礼品卡兑换码交给不可信第三方；操作前请自行判断风险，并以相关平台官方页面和实际政策为准。</p>
+    </section>
+  `;
+}
+
 function renderRelatedArticleCard(articleId) {
   const article = articles.find((item) => item.id === articleId);
   if (!article) return "";
@@ -191,7 +205,7 @@ function renderRelatedArticleCard(articleId) {
         <div class="meta-row">
           <span class="badge ${article.status}">${statusNames[article.status] || article.status}</span>
           <span class="badge">${article.difficulty}</span>
-          <span class="badge risk-${article.riskLevel}">${riskNames[article.riskLevel] || article.riskLevel}</span>
+          ${article.hideRiskLevel ? "" : `<span class="badge risk-${article.riskLevel}">${riskNames[article.riskLevel] || article.riskLevel}</span>`}
         </div>
         <h3>${article.title}</h3>
         <p>${article.description || article.summary}</p>
@@ -468,7 +482,7 @@ function renderDetail(article) {
               <span class="badge ${article.status}">${statusNames[article.status] || article.status}</span>
               <span class="badge">${article.category}</span>
               <span class="badge">${article.difficulty}</span>
-              <span class="badge risk-${article.riskLevel}">${riskNames[article.riskLevel] || article.riskLevel}</span>
+              ${article.hideRiskLevel ? "" : `<span class="badge risk-${article.riskLevel}">${riskNames[article.riskLevel] || article.riskLevel}</span>`}
             </div>
             <h1>${article.title}</h1>
             <p>${article.description}</p>
@@ -482,6 +496,7 @@ function renderDetail(article) {
 
         <div class="article-content">
           ${renderExtraSections(article.topSections)}
+          ${renderHighRiskNotice(article)}
 
           ${article.targetUsers?.length ? `
             <section class="plain-section">

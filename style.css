@@ -366,6 +366,11 @@ button {
   background: #ffe2e2;
 }
 
+.badge.not-recommended {
+  color: #7a2e2e;
+  background: #f2dddd;
+}
+
 .badge.risk-低 {
   color: #0b7b4e;
   background: #ddf5ea;
@@ -429,6 +434,40 @@ button {
   color: var(--muted);
   text-align: center;
   background: rgba(255, 255, 255, .78);
+}
+
+.site-disclaimer {
+  margin: 0 0 22px;
+  padding: 18px 20px;
+  border: 1px solid #f3d49c;
+  border-radius: 18px;
+  color: #704805;
+  background: #fff8ec;
+  box-shadow: 0 12px 34px rgba(26, 47, 91, .06);
+}
+
+.site-disclaimer h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.site-disclaimer p {
+  margin: 0;
+  line-height: 1.8;
+}
+
+.site-footer {
+  max-width: 1240px;
+  margin: -28px auto 0;
+  padding: 0 28px 34px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.article-open .site-footer {
+  display: none;
 }
 
 .detail-view {
@@ -615,6 +654,29 @@ button {
   display: grid;
   gap: 12px;
   margin: 24px 0;
+}
+
+.high-risk-card {
+  margin: 24px 0;
+  padding: 22px;
+  border: 1px solid #ffcaca;
+  border-radius: 18px;
+  color: #8b2f2f;
+  background: #fff0f0;
+}
+
+.high-risk-card h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+.high-risk-card p {
+  margin: 0;
+  line-height: 1.85;
+}
+
+.high-risk-card p + p {
+  margin-top: 10px;
 }
 
 .plain-section {

@@ -21,7 +21,7 @@ window.GUIDE_ARTICLES = [
     summary: "通过 Gmail 移动应用进入 Google 账号创建流程，适合新手按截图一步一步操作。",
     notices: [
       { type: "note", text: "App Store 搜索页可能出现广告应用，操作时应认准官方 Gmail 应用，开发者应显示为 Google。" },
-      { type: "info", text: "注册流程可能因设备、地区、网络环境、Google 页面版本不同而略有变化。本教程只介绍正常账号注册流程，不提供绕过风控、规避平台规则、异常注册等内容。" }
+      { type: "info", text: "注册流程可能因设备、地区、网络环境、Google 页面版本不同而略有变化。本教程只介绍正常账号注册流程，不提供异常注册、异常验证或违反平台规则的操作指导。" }
     ],
     steps: [
       {
@@ -537,14 +537,14 @@ window.GUIDE_ARTICLES = [
       {
         type: "risk",
         title: "先看风险，再决定是否操作",
-        description: "这类订阅方式涉及外区 Apple ID、礼品卡充值、App Store 订阅、余额处理和账号风控。礼品卡通常购买后不易退款，订阅是否成功也可能受到 Apple ID 地区、支付环境、网络环境、账号状态等因素影响。本文只做正常流程说明和风险提示，不保证一定成功，也不提供绕过平台规则或风控的做法。"
+        description: "这类订阅方式涉及外区 Apple ID、礼品卡充值、App Store 订阅、余额处理和账号风控。礼品卡通常购买后不易退款，订阅是否成功也可能受到 Apple ID 地区、支付环境、网络环境、账号状态等因素影响。本文只做正常流程说明和风险提示，不保证一定成功，也不提供违反平台规则或异常规避风险控制的做法。"
       }
     ],
     notices: [
       { type: "warning", text: "本文只做正常流程说明和风险提示，不保证任何平台、账号、支付方式一定可用。" },
       { type: "warning", text: "用户需要自行承担礼品卡不可退、账号风控、订阅失败、余额残留等风险。不建议在主力 Apple ID 上进行高风险尝试。" },
       { type: "note", text: "礼品卡价格、汇率、手续费、库存、支付方式和 ChatGPT Plus 订阅价格都可能变化，最终以平台、App Store 和 ChatGPT App 内实际显示为准。" },
-      { type: "info", text: "不提供绕过风控、规避平台规则、异常支付、异常注册等操作指导。请遵守 Apple、OpenAI、礼品卡平台及所在地法律法规。" }
+      { type: "info", text: "不提供异常支付、异常注册、违反平台规则或规避风险控制的操作指导。请遵守 Apple、OpenAI、礼品卡平台及所在地法律法规。" }
     ],
     links: [
       {
@@ -622,8 +622,8 @@ window.GUIDE_ARTICLES = [
         navTitle: "选择平台",
         description: "可以在多个平台购买土耳其区 iTunes Gift Card。本文会把 SEAGM 和 Oyunfor 分开说明，也可以自行评估其他正规渠道。不同平台支付方式、手续费、到账速度和售后能力不同。",
         tips: [
-          "Oyunfor 通常更接近汇率价，但不支持国内银行卡。",
-          "SEAGM 支持支付宝、微信等支付方式，但可能有额外手续费。",
+          "Oyunfor 的价格和支付方式以平台页面为准，通常不支持国内银行卡。",
+          "SEAGM 覆盖支付宝、微信等支付方式，但可能有额外手续费。",
           "价格、库存、手续费以平台实际页面为准。"
         ]
       },
@@ -633,7 +633,7 @@ window.GUIDE_ARTICLES = [
         title: "SEAGM 示例：登录并找到土耳其区礼品卡",
         navTitle: "SEAGM 购买",
         imageLayout: "wide",
-        description: "如果选择 SEAGM，可以先登录账号，再搜索或进入土耳其区 iTunes Gift Card / Apple Gift Card 商品页。SEAGM 的优势是支付方式对国内用户相对友好，但最终价格和手续费仍以结算页面为准。",
+        description: "如果选择 SEAGM，可以先登录账号，再搜索或进入土耳其区 iTunes Gift Card / Apple Gift Card 商品页。SEAGM 覆盖的支付方式较多，但最终价格、手续费和到账速度仍以结算页面为准。",
         images: [
           {
             src: "assets/tutorial-images/chatgpt-subscription-tr/01seagm登录.jpg",
@@ -698,7 +698,7 @@ window.GUIDE_ARTICLES = [
         ],
         tips: [
           "不要买错国家或地区。",
-          "Oyunfor 不一定适合国内银行卡用户，付款前先确认自己能否完成支付。",
+          "Oyunfor 不一定支持国内银行卡，付款前先确认自己能否完成支付。",
           "购买前确认商品标题、地区、面值和到账方式。"
         ]
       },
@@ -904,8 +904,8 @@ window.GUIDE_ARTICLES = [
     ],
     faq: [
       {
-        question: "Oyunfor 和 SEAGM 哪个更适合？",
-        answer: "Oyunfor 通常价格更接近汇率，但支付方式对国内用户不一定方便；SEAGM 支持支付宝、微信等支付方式，但可能有额外手续费。最终选择要看实际价格、支付方式和个人风险承受能力。"
+        question: "Oyunfor 和 SEAGM 应该如何选择？",
+        answer: "不同平台的价格、库存、支付方式、手续费和到账速度都可能变化。Oyunfor 对国内银行卡用户不一定方便；SEAGM 覆盖支付宝、微信等支付方式，但可能有额外手续费。最终选择应以实际结算页面和个人风险承受能力为准。"
       },
       {
         question: "订阅 ChatGPT Plus 一定要买 500 面值吗？",
@@ -930,7 +930,7 @@ window.GUIDE_ARTICLES = [
     ],
     followUps: {
       title: "再次提醒",
-      description: "这篇教程不是低价承诺，也不保证任何地区、平台、支付方式或账号状态一定可用。操作前请确认自己能接受礼品卡不可退、余额残留、订阅失败和售后链路较长等风险。",
+      description: "这篇教程不做价格承诺，也不保证任何地区、平台、支付方式或账号状态一定可用。操作前请确认自己能接受礼品卡不可退、余额残留、订阅失败和售后链路较长等风险。",
       items: [
         {
           title: "保留记录",
@@ -943,6 +943,232 @@ window.GUIDE_ARTICLES = [
         {
           title: "理性判断",
           description: "如果平台价格、支付方式或账号状态看起来异常，不建议继续操作。"
+        }
+      ]
+    }
+  },
+  {
+    id: "google-ai-pro-pixel-offer",
+    title: "Google AI Pro 12 个月 Pixel 活动说明：资格、领取方式与风险提醒",
+    description: "整理 Google Pixel 设备可领取 Google AI Pro / Google One 试用的官方活动信息、正常领取路径、付款与取消续订注意事项，并说明第三方代认证和账号安全风险。",
+    cover: "assets/tutorial-images/Gemini-sub-tr/封面.png",
+    coverFallback: "assets/placeholder.svg",
+    category: "Gemini 订阅",
+    group: "subscription",
+    status: "high-risk",
+    difficulty: "中等",
+    riskLevel: "高",
+    hideRiskLevel: true,
+    updatedAt: "2026-05-13",
+    duration: "10-15 分钟",
+    targetUsers: [
+      "想了解 Pixel 设备 Google AI Pro 试用活动的用户",
+      "已经拥有或准备购买 Pixel 设备的用户",
+      "想评估 Gemini / Google One 订阅风险的用户",
+      "不建议完全不了解账号安全的新手直接尝试第三方服务"
+    ],
+    summary: "本文以 Google 官方活动说明为基础，介绍 Pixel 用户领取 Google AI Pro / Google One 试用的正常路径，并提醒付款、续订、账号安全和第三方代认证风险。本站不提供绕过资格验证、机器人认证或提交账号密码的操作教程。",
+    topSections: [
+      {
+        type: "risk",
+        title: "先看清活动边界",
+        description: "Google 官方说明中，Pixel 相关试用资格通常要求购买并激活指定 Pixel 设备，再通过 Gemini App 或 Google One App 检查资格并开始试用。网上存在第三方代认证、机器人认证等方式，但这类方式可能要求提交 Google 账号密码或二步验证密钥，存在账号被盗、支付风险、资格失效和违反活动要求的可能。本文只做活动说明、正常入口整理和风险提醒。"
+      }
+    ],
+    notices: [
+      { type: "warning", text: "不要把 Google 邮箱密码、二步验证密钥、备用验证码、支付卡信息交给不可信第三方。任何要求你提交完整账号凭据的服务，都应按高风险处理。" },
+      { type: "warning", text: "本文不提供绕过 Pixel 设备资格验证、代认证机器人、异常注册、异常支付等操作指导。" },
+      { type: "note", text: "Google 活动地区、设备型号、试用时长和截止时间会变化，最终以 Google 官方页面和 App 内实际显示为准。" }
+    ],
+    links: [
+      {
+        title: "Google 官方 Pixel 设备活动说明",
+        url: "https://support.google.com/gemini/answer/13529884"
+      },
+      {
+        title: "Gemini 官网",
+        url: "https://gemini.google.com/"
+      },
+      {
+        title: "Google One",
+        url: "https://one.google.com/"
+      },
+      {
+        title: "Roxy Browser",
+        url: "https://roxybrowser.com/t/porter"
+      },
+      {
+        title: "2FA 验证码工具",
+        url: "https://2fa.kennygmail.com/"
+      }
+    ],
+    extraSections: [
+      {
+        type: "info",
+        title: "当前官方活动信息怎么理解？",
+        description: "Google 官方页面显示，Pixel 10 Pro、Pixel 10 Pro XL 和 Pixel 10 Pro Fold 在部分国家或地区可获得 Google AI Pro 12 个月试用，活动时间为 2025-08-20 至 2026-10-31；Pixel 10 在部分地区是 Google One Premium 6 个月试用。Pixel 9 Pro 系列也曾有 Google AI Pro 12 个月活动，但官方页面显示其截止时间为 2025-11-15。不同设备、地区和账号状态可能对应不同权益。",
+        items: [
+          "12 个月 AI Pro 试用通常面向指定 Pro 系列 Pixel 设备。",
+          "普通 Pixel 或 a 系列设备可能是 Google One Premium 或 Basic 试用，不一定是 AI Pro。",
+          "活动是否出现，以 Gemini App / Google One App 内实际资格检查结果为准。"
+        ]
+      },
+      {
+        type: "warning",
+        title: "关于第三方代认证",
+        description: "市面上可能存在第三方代认证、认证网站或机器人服务。它们往往不是 Google 官方渠道，且可能要求提供账号密码、二步验证密钥或其他敏感信息。本站不公开此类入口，也不建议新手把主力 Google 账号交给第三方处理。即使认证成功，也不能代表账号长期安全或权益长期稳定。",
+        items: [
+          "不要使用主力 Google 账号测试高风险服务。",
+          "不要把 2FA 密钥当成普通验证码随意复制给别人。",
+          "绑定支付方式前，先确认账号登录设备、二步验证和恢复方式是否安全。"
+        ]
+      }
+    ],
+    steps: [
+      {
+        id: "gemini-pixel-step-01",
+        number: "01",
+        title: "确认自己要看的是什么活动",
+        navTitle: "确认活动",
+        description: "先打开 Google 官方 Pixel 活动说明页，确认当前设备型号、活动地区、试用时长和截止时间。不要只看网上截图或转述，因为 Google 会按设备、地区、账号状态调整资格。",
+        tips: [
+          "优先看 Google 官方页面和 App 内提示。",
+          "Pixel 10 Pro 系列与普通 Pixel 10 的权益不同。",
+          "Pixel 9 Pro 系列旧活动已经接近或超过官方截止时间，需以页面为准。"
+        ]
+      },
+      {
+        id: "gemini-pixel-step-02",
+        number: "02",
+        title: "准备 Google 账号与基础安全设置",
+        navTitle: "账号准备",
+        description: "建议使用长期可控的 Google 账号，并提前检查恢复邮箱、恢复手机号和二步验证。涉及订阅和付款的账号，不建议使用来路不明的成品号。",
+        tips: [
+          "恢复邮箱和手机号要能正常接收验证。",
+          "如果开启身份验证器，要妥善保存密钥和备用码。",
+          "不要把账号密码、2FA 密钥和备用码发给别人。"
+        ]
+      },
+      {
+        id: "gemini-pixel-step-03",
+        number: "03",
+        title: "使用官方路径检查资格",
+        navTitle: "官方检查",
+        description: "如果你有符合条件的 Pixel 设备，可以在 Pixel 手机上打开 Gemini App 或 Google One App，登录目标 Google 账号后检查是否出现试用权益。",
+        tips: [
+          "Gemini App 内通常会出现 Check eligibility、Start Trial 或升级入口。",
+          "Google One App 可在设置中检查可用优惠。",
+          "如果没有活动入口，说明账号、设备、地区或活动状态可能不满足条件。"
+        ]
+      },
+      {
+        id: "gemini-pixel-step-04",
+        number: "04",
+        title: "需要时使用独立浏览环境",
+        navTitle: "浏览环境",
+        description: "如果只是管理多个账号、隔离不同浏览环境，可以使用指纹浏览器或独立浏览器配置文件。它的作用是降低环境混杂带来的登录异常，不代表可以保证活动资格。",
+        tips: [
+          "Roxy Browser 可以作为浏览环境隔离工具了解。",
+          "不要把环境工具理解为官方资格认证工具。",
+          "登录 Google 账号时尽量保持网络、设备和操作节奏稳定。"
+        ]
+      },
+      {
+        id: "gemini-pixel-step-05",
+        number: "05",
+        title: "谨慎处理 2FA 密钥",
+        navTitle: "2FA 安全",
+        description: "二步验证密钥可以生成 6 位动态验证码，本质上是账号安全凭据。可以了解 2FA 验证码工具的工作方式，但不要在不可信网站或机器人里输入主力账号的密钥。",
+        tips: [
+          "2FA 密钥不是一次性验证码，泄露后风险很高。",
+          "如果怀疑密钥泄露，应立刻重置身份验证器并检查登录设备。",
+          "第三方 2FA 工具只适合在你完全理解风险时谨慎使用。"
+        ]
+      },
+      {
+        id: "gemini-pixel-step-06",
+        number: "06",
+        title: "绑定付款方式并开始试用",
+        navTitle: "绑定付款",
+        description: "如果 App 内出现试用权益，按页面提示绑定有效付款方式并开始试用。Google 可能会进行小额预授权或付款验证，最终以付款页面显示为准。",
+        tips: [
+          "确保付款方式归属、账单地址和账号地区尽量一致。",
+          "不要反复尝试失败付款，避免触发支付风控。",
+          "订阅价格、税费和试用结束后的收费以页面显示为准。"
+        ]
+      },
+      {
+        id: "gemini-pixel-step-07",
+        number: "07",
+        title: "订阅成功后检查并取消自动续订",
+        navTitle: "取消续订",
+        description: "试用开通后，进入 Google One 订阅管理页面确认权益状态。如果不想试用期结束后自动扣费，应在到期前取消自动续订。",
+        tips: [
+          "官方说明中，试用期内取消通常仍可使用到试用期结束。",
+          "取消订阅不等于退款，具体以 Google 页面显示为准。",
+          "建议截图保存订阅状态、到期时间和取消状态。"
+        ]
+      }
+    ],
+    riskWarnings: [
+      {
+        title: "活动资格风险",
+        description: "Pixel 试用权益与设备型号、激活状态、账号地区、账号历史订阅状态有关。页面中不承诺任何账号一定能领取。"
+      },
+      {
+        title: "第三方服务风险",
+        description: "第三方认证网站或机器人不是 Google 官方渠道，可能带来账号被盗、密钥泄露、权益失效、支付风险和售后困难。"
+      },
+      {
+        title: "2FA 密钥风险",
+        description: "二步验证密钥一旦泄露，对方可能持续生成验证码。发现异常后应立即重置身份验证器、修改密码并检查登录设备。"
+      },
+      {
+        title: "支付与续订风险",
+        description: "试用通常需要绑定有效付款方式。试用期结束后可能自动按标准价格扣费，不想续费应提前取消自动续订。"
+      },
+      {
+        title: "账号风控风险",
+        description: "频繁切换地区、网络、设备或短时间多次尝试领取/付款，可能触发 Google 安全验证或支付风控。"
+      }
+    ],
+    faq: [
+      {
+        question: "没有 Pixel 设备能不能领取？",
+        answer: "Google 官方活动说明要求购买并激活指定 Pixel 设备。网上存在第三方代认证说法，但这不是官方路径，风险较高，本站不提供具体操作教程。"
+      },
+      {
+        question: "Roxy Browser 是必须的吗？",
+        answer: "不是。它只是浏览环境隔离工具，适合需要管理多个账号或减少环境混杂的人了解。它不能保证领取资格，也不是 Google 官方工具。"
+      },
+      {
+        question: "2FA 验证码工具安全吗？",
+        answer: "工具本身用于根据密钥生成动态验证码，但密钥属于敏感信息。不要把主力账号的密钥输入到不可信网站或机器人里。使用过第三方 2FA 工具后，建议及时回到 Google 账号安全设置中重新更换身份验证器密钥。"
+      },
+      {
+        question: "试用成功后要不要取消自动续订？",
+        answer: "如果不想试用期结束后自动扣费，建议进入 Google One 订阅管理页面确认到期时间，并按页面提示取消自动续订。"
+      },
+      {
+        question: "可以用主力 Google 账号尝试第三方认证吗？",
+        answer: "不建议。主力账号通常绑定邮箱、云盘、支付和其他重要服务，一旦被盗或风控，损失会远大于试用权益本身。"
+      }
+    ],
+    followUps: {
+      title: "更稳妥的做法",
+      description: "如果你只是想使用 Gemini Advanced 或 Google AI Pro，更建议优先选择官方订阅、真实设备活动、家庭共享或可信促销渠道。第三方代认证只适合能完全理解账号和支付风险的人自行判断。",
+      items: [
+        {
+          title: "先看官方",
+          description: "活动是否存在、试用时长和地区支持，以 Google 官方页面和 App 内提示为准。"
+        },
+        {
+          title: "保护账号",
+          description: "不要把密码、2FA 密钥、备用码和支付信息交给不可信第三方。"
+        },
+        {
+          title: "记录订阅",
+          description: "开通后保存权益页面、扣费日期、取消续订状态和付款记录。"
         }
       ]
     }
