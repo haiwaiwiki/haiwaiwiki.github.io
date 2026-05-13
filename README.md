@@ -58,3 +58,54 @@ node tools/generate-webp.js
 ```
 
 脚本会在保留原图的同时生成 WebP 派生图，页面会优先加载 WebP，点击预览时仍可回到原图。
+
+## 访问统计说明
+
+项目内置了最简单的匿名访问统计入口，默认关闭，不依赖后端，也不会在教程卡片上显示浏览量。
+
+当前优先支持 Cloudflare Web Analytics，用于查看：
+
+- 首页访问量；
+- 各教程详情页访问量；
+- 基础来源、设备、地区和浏览器信息；
+- 不统计搜索关键词、手机号、邮箱、QQ 号、真实姓名、验证码、账号密码等敏感信息。
+
+站点教程详情页使用 `?article=教程ID` 形式的轻量路由，并通过 History API 切换页面。这样做是为了配合 Cloudflare Web Analytics 的 SPA 统计能力；Cloudflare 官方说明支持 History API 路由统计，但不支持 hash 路由统计。旧的 `#/article/...` 链接仍可兼容访问。
+
+### 开启统计
+
+1. 在 Cloudflare Web Analytics 后台添加站点；
+2. 获取 Cloudflare 提供的 Web Analytics token；
+3. 修改 `analytics-config.js`：
+
+```js
+window.HAIWAIWIKI_ANALYTICS = {
+  provider: "cloudflare",
+  enabled: true,
+  cloudflareToken: "YOUR_CLOUDFLARE_WEB_ANALYTICS_TOKEN"
+};
+```
+
+Cloudflare Web Analytics 的 token 会出现在前端统计脚本里，它不是服务器 API Key，但仍建议只填写官方后台生成的站点 token，不要放入任何账号密码、API Key 或私人凭据。
+
+### 关闭统计
+
+把 `analytics-config.js` 中的 `enabled` 改为 `false`：
+
+```js
+enabled: false
+```
+
+关闭后，`analytics.js` 不会加载 Cloudflare 统计脚本。
+
+### 替换统计工具
+
+如果后续要换成 Umami、Plausible 或自建统计接口，可以保留 `analytics.js` 中的 `haiwaiwiki:route-change` 事件。站点在首页和每篇教程详情页渲染后都会发出这个事件，便于以后接入单页应用统计。
+
+当前不做：
+
+- 卡片点击统计；
+- 搜索关键词统计；
+- 用户系统；
+- 后台统计页面；
+- 自定义事件上报。

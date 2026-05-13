@@ -436,26 +436,6 @@ button {
   background: rgba(255, 255, 255, .78);
 }
 
-.site-disclaimer {
-  margin: 0 0 22px;
-  padding: 18px 20px;
-  border: 1px solid #f3d49c;
-  border-radius: 18px;
-  color: #704805;
-  background: #fff8ec;
-  box-shadow: 0 12px 34px rgba(26, 47, 91, .06);
-}
-
-.site-disclaimer h2 {
-  margin: 0 0 8px;
-  font-size: 18px;
-}
-
-.site-disclaimer p {
-  margin: 0;
-  line-height: 1.8;
-}
-
 .site-footer {
   max-width: 1240px;
   margin: -28px auto 0;

@@ -549,7 +549,7 @@ window.GUIDE_ARTICLES = [
     links: [
       {
         title: "外区 Apple ID 注册教程",
-        url: "#/article/apple-id-region"
+        url: "?article=apple-id-region"
       },
       {
         title: "Oyunfor",

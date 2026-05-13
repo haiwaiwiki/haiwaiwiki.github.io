@@ -104,6 +104,10 @@ function getFilteredArticles() {
   return articles.filter((article) => isMatchFilter(article) && isMatchQuery(article));
 }
 
+function articleUrl(id) {
+  return `?article=${encodeURIComponent(id)}`;
+}
+
 function webpSrc(src) {
   if (!src || src.includes("placeholder.svg") || src.endsWith(".webp")) return src;
   return src.replace(/\.(png|jpe?g)$/i, ".webp");
@@ -155,7 +159,7 @@ function renderHome() {
   }
 
   cardGrid.innerHTML = filtered.map((article) => `
-    <a class="guide-card ${article.coverMode === "cover" ? "cover-fill" : ""}" href="#/article/${article.id}">
+    <a class="guide-card ${article.coverMode === "cover" ? "cover-fill" : ""}" href="${articleUrl(article.id)}">
       <div class="card-cover">
         <img ${imageAttrs(article.cover, article.coverFallback)} alt="${article.title}">
       </div>
@@ -197,7 +201,7 @@ function renderRelatedArticleCard(articleId) {
   if (!article) return "";
 
   return `
-    <a class="related-article-card" href="#/article/${article.id}">
+    <a class="related-article-card" href="${articleUrl(article.id)}">
       <div class="related-cover">
         <img ${imageAttrs(article.cover, article.coverFallback)} alt="${article.title}">
       </div>
@@ -345,7 +349,7 @@ function renderLinks(links) {
         ${links.map((link) => `
           <li>
             <strong>${link.title}：</strong>
-            <a href="${link.url}" ${link.url.startsWith("#") ? "" : 'target="_blank" rel="noopener noreferrer"'}>点击跳转</a>
+            <a href="${link.url}" ${link.url.startsWith("#") || link.url.startsWith("?") ? "" : 'target="_blank" rel="noopener noreferrer"'}>点击跳转</a>
           </li>
         `).join("")}
       </ul>
@@ -473,7 +477,7 @@ function renderDetail(article) {
           <span>正在阅读</span>
           <strong>${article.title}</strong>
         </div>
-        <a class="back-button" href="#/">返回首页</a>
+        <a class="back-button" href="./">返回首页</a>
       </div>
       <div class="article-scroll">
         <header class="tutorial-hero">
@@ -532,6 +536,12 @@ function renderDetail(article) {
   setupGalleries();
 }
 
+function emitRouteChange(detail) {
+  window.dispatchEvent(new CustomEvent("haiwaiwiki:route-change", {
+    detail
+  }));
+}
+
 function openImagePreview(img) {
   const previewImg = imagePreview.querySelector("img");
   const caption = imagePreview.querySelector("figcaption");
@@ -553,15 +563,23 @@ function closeImagePreview() {
 
 function route() {
   const hash = decodeURIComponent(window.location.hash || "#/");
-  const match = hash.match(/^#\/article\/(.+)$/);
+  const queryArticleId = new URLSearchParams(window.location.search).get("article");
+  const hashMatch = hash.match(/^#\/article\/(.+)$/);
+  const articleId = queryArticleId || hashMatch?.[1];
 
-  if (match) {
-    const article = articles.find((item) => item.id === match[1]);
+  if (articleId) {
+    const article = articles.find((item) => item.id === articleId);
     if (article) {
       document.body.classList.add("article-open");
       homeView.hidden = true;
       detailView.hidden = false;
       renderDetail(article);
+      emitRouteChange({
+        type: "article",
+        path: window.location.pathname + window.location.search + window.location.hash,
+        title: article.title,
+        articleId: article.id
+      });
       window.scrollTo(0, 0);
       return;
     }
@@ -573,7 +591,17 @@ function route() {
   detailView.classList.remove("has-floating-toc");
   cleanupTocObserver();
   renderHome();
+  emitRouteChange({
+    type: "home",
+    path: window.location.pathname + window.location.search + window.location.hash,
+    title: "海外服务使用指南"
+  });
   window.scrollTo(0, 0);
+}
+
+function navigateTo(url) {
+  window.history.pushState({}, "", url);
+  route();
 }
 
 document.querySelectorAll(".filter-chip").forEach((button) => {
@@ -631,6 +659,21 @@ detailView.addEventListener("click", (event) => {
   }
 });
 
+document.addEventListener("click", (event) => {
+  const link = event.target.closest("a");
+  if (!link) return;
+
+  const url = new URL(link.href, window.location.href);
+  if (url.origin !== window.location.origin) return;
+
+  const isArticleLink = url.searchParams.has("article");
+  const isHomeLink = link.classList.contains("brand") || link.classList.contains("back-button");
+  if (!isArticleLink && !isHomeLink) return;
+
+  event.preventDefault();
+  navigateTo(isHomeLink ? "./" : `${url.pathname}${url.search}${url.hash}`);
+});
+
 imagePreview.addEventListener("click", (event) => {
   if (event.target === imagePreview || event.target.closest(".image-preview-close")) {
     closeImagePreview();
@@ -642,5 +685,6 @@ window.addEventListener("keydown", (event) => {
 });
 
 window.addEventListener("hashchange", route);
+window.addEventListener("popstate", route);
 
 route();
