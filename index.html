@@ -19,44 +19,22 @@
       <strong>海外服务使用指南</strong>
     </a>
     <label class="topbar-search">
-      <input class="search-input" type="search" placeholder="搜索：Google、Apple ID、GPT、手机号、验证码、订阅">
+      <input class="search-input" type="search" placeholder="搜索：Google、Apple ID、GPT、订阅、安全">
     </label>
   </header>
 
   <main class="page">
     <section id="home-view" class="home-view">
-      <section class="directory-search">
-        <label class="search-box">
-          <input class="search-input" type="search" placeholder="搜索：Google、Apple ID、GPT、手机号、验证码、订阅">
-        </label>
-      </section>
-
-      <section class="directory-block">
-        <div class="directory-heading">
-          <h2>按分类查找</h2>
-        </div>
-        <div id="category-grid" class="category-grid"></div>
-      </section>
-
-      <section class="directory-block">
-        <div class="directory-heading">
-          <h2>推荐先看</h2>
-        </div>
-        <section id="recommended-grid" class="recommended-grid"></section>
-      </section>
-
       <section class="directory-block all-guides-block">
-        <div class="filter-row" aria-label="教程筛选">
-          <button class="filter-chip active" data-filter="all">全部</button>
-          <button class="filter-chip" data-filter="status:available">可用</button>
-          <button class="filter-chip" data-filter="status:draft">待完善</button>
-          <button class="filter-chip" data-filter="status:high-risk">高风险提示</button>
-          <button class="filter-chip" data-filter="status:not-recommended">不推荐</button>
-          <button class="filter-chip" data-filter="difficulty:简单">简单</button>
-          <button class="filter-chip" data-filter="difficulty:中等">中等</button>
-          <button class="filter-chip" data-filter="risk:高">高风险</button>
+        <div class="tag-filter-row" aria-label="固定标签">
+          <button class="tag-filter active" type="button" data-tag="all">全部</button>
+          <button class="tag-filter" type="button" data-tag="Google">Google</button>
+          <button class="tag-filter" type="button" data-tag="Apple ID">Apple ID</button>
+          <button class="tag-filter" type="button" data-tag="ChatGPT">ChatGPT</button>
+          <button class="tag-filter" type="button" data-tag="Gemini">Gemini</button>
+          <button class="tag-filter" type="button" data-tag="订阅">订阅</button>
+          <button class="tag-filter" type="button" data-tag="安全">安全</button>
         </div>
-
         <div class="section-title">
           <h1>全部教程</h1>
           <div class="title-tools">
@@ -64,10 +42,9 @@
             <label class="sort-select">
               <span>排序</span>
               <select id="sort-select">
-                <option value="latest">最新更新</option>
-                <option value="recommended">推荐优先</option>
-                <option value="risk">风险等级</option>
-                <option value="category">分类</option>
+                <option value="time">时间</option>
+                <option value="type">类型</option>
+                <option value="custom">自定义</option>
               </select>
             </label>
             <div class="view-switch" aria-label="展示方式">

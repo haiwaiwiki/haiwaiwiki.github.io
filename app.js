@@ -31,21 +31,12 @@ const articleOrder = [
   "google-ai-pro-pixel-offer"
 ];
 
-const categoryEntries = [
-  { key: "account", title: "账号注册", description: "Google、Apple ID 等基础账号创建与准备。" },
-  { key: "region", title: "地区与商店", description: "外区账号、商店地区、账单资料和使用边界。" },
-  { key: "subscription", title: "订阅与支付", description: "礼品卡、App Store 订阅和续订管理。" },
-  { key: "ai", title: "AI 工具", description: "ChatGPT、Gemini、AI Studio 等工具相关教程。" },
-  { key: "security", title: "安全与找回", description: "账号体检、恢复方式、两步验证和排查清单。" },
-  { key: "benefits", title: "活动与福利", description: "官方活动、试用资格和领取注意事项。" },
-  { key: "risk", title: "风险说明", description: "高风险流程、第三方平台和账号安全提醒。" }
-];
+const customOrderStorageKey = "guide-custom-article-order";
 
 const state = {
   query: "",
-  filter: "all",
-  category: "all",
-  sort: "latest",
+  tag: "all",
+  sort: "time",
   view: "grid"
 };
 
@@ -56,11 +47,12 @@ const detailView = document.querySelector("#detail-view");
 const cardGrid = document.querySelector("#card-grid");
 const searchInputs = document.querySelectorAll(".search-input");
 const resultCount = document.querySelector("#result-count");
-const categoryGrid = document.querySelector("#category-grid");
-const recommendedGrid = document.querySelector("#recommended-grid");
 const sortSelect = document.querySelector("#sort-select");
+const tagFilters = document.querySelectorAll(".tag-filter");
 const viewButtons = document.querySelectorAll(".view-button");
 const imagePreview = document.createElement("div");
+let customArticleOrder = loadCustomArticleOrder();
+let draggedArticleId = "";
 
 imagePreview.className = "image-preview";
 imagePreview.hidden = true;
@@ -82,6 +74,49 @@ function articleIndex(article) {
   return index === -1 ? 999 : index;
 }
 
+function compareByTime(a, b) {
+  const dateDiff = new Date(b.updatedAt) - new Date(a.updatedAt);
+  if (dateDiff) return dateDiff;
+  return articleIndex(a) - articleIndex(b);
+}
+
+function getDefaultCustomOrder() {
+  return [...articles].sort(compareByTime).map((article) => article.id);
+}
+
+function normalizeCustomOrder(order) {
+  const validIds = new Set(articles.map((article) => article.id));
+  const savedIds = Array.isArray(order) ? order.filter((id) => validIds.has(id)) : [];
+  return uniqueList([...savedIds, ...getDefaultCustomOrder()]);
+}
+
+function loadCustomArticleOrder() {
+  try {
+    return normalizeCustomOrder(JSON.parse(localStorage.getItem(customOrderStorageKey) || "[]"));
+  } catch {
+    return normalizeCustomOrder([]);
+  }
+}
+
+function saveCustomArticleOrder() {
+  try {
+    localStorage.setItem(customOrderStorageKey, JSON.stringify(customArticleOrder));
+  } catch {
+    // Custom order is an enhancement; ignore storage failures in restricted browsers.
+  }
+}
+
+function moveCustomArticle(draggedId, targetId) {
+  if (!draggedId || !targetId || draggedId === targetId) return false;
+  const nextOrder = normalizeCustomOrder(customArticleOrder).filter((id) => id !== draggedId);
+  const targetIndex = nextOrder.indexOf(targetId);
+  if (targetIndex === -1) return false;
+  nextOrder.splice(targetIndex, 0, draggedId);
+  customArticleOrder = nextOrder;
+  saveCustomArticleOrder();
+  return true;
+}
+
 function getArticleTags(article) {
   return uniqueList([
     ...(article.tags || []),
@@ -93,139 +128,45 @@ function getArticleTags(article) {
   ]).slice(0, 5);
 }
 
-function getArticleKeywords(article) {
-  return uniqueList([
-    ...(article.keywords || []),
-    ...(article.tags || []),
-    article.category,
-    groupNames[article.group]
-  ]);
-}
-
-function getArticleCategories(article) {
-  const text = [
+function articleSearchText(article) {
+  return [
     article.id,
-    article.title,
-    article.description,
-    article.category,
-    article.group,
-    ...(article.tags || []),
-    ...(article.keywords || [])
-  ].join(" ").toLowerCase();
-
-  const categories = new Set();
-  if (article.group) categories.add(article.group);
-  if (text.includes("google") || text.includes("账号注册") || text.includes("apple id")) categories.add("account");
-  if (article.group === "region" || text.includes("地区") || text.includes("商店") || text.includes("app store")) categories.add("region");
-  if (article.group === "subscription" || text.includes("订阅") || text.includes("支付") || text.includes("礼品卡")) categories.add("subscription");
-  if (text.includes("ai") || text.includes("gpt") || text.includes("gemini") || text.includes("chatgpt") || text.includes("studio") || text.includes("antigravity")) categories.add("ai");
-  if (text.includes("安全") || text.includes("找回") || text.includes("排查") || text.includes("恢复") || text.includes("两步验证")) categories.add("security");
-  if (text.includes("活动") || text.includes("福利") || text.includes("pixel") || text.includes("试用")) categories.add("benefits");
-  if (article.status === "high-risk" || article.riskLevel === "高" || text.includes("风险")) categories.add("risk");
-  return [...categories];
-}
-
-function isRecommended(article) {
-  return article.recommended === true || article.featured === true || [
-    "gmail-app-google-account-register-mainland",
-    "google-account-settings-checklist",
-    "apple-id-region",
-    "turkey-gpt-subscription"
-  ].includes(article.id);
-}
-
-function riskRank(article) {
-  return { "高": 3, "中": 2, "低": 1 }[article.riskLevel] || 0;
-}
-
-function isMatchFilter(article) {
-  if (state.category !== "all" && !getArticleCategories(article).includes(state.category)) return false;
-  if (state.filter === "all") return true;
-
-  const [type, value] = state.filter.split(":");
-  if (type === "status") return article.status === value;
-  if (type === "difficulty") return article.difficulty === value;
-  if (type === "risk") return article.riskLevel === value;
-  return getArticleCategories(article).includes(state.filter);
-}
-
-function isMatchQuery(article) {
-  const query = state.query.trim().toLowerCase();
-  if (!query) return true;
-
-  const text = [
     article.title,
     article.description,
     article.summary,
     article.category,
-    ...(article.tags || []),
-    ...(article.keywords || []),
-    article.status,
+    groupNames[article.group],
     article.difficulty,
     article.riskLevel,
-    article.updatedAt,
-    ...(article.targetUsers || []),
-    ...(article.notices || []).map((notice) => notice.text),
-    ...(article.topSections || []).flatMap((section) => [
-      section.title,
-      section.description,
-      ...(section.items || [])
-    ]),
-    ...(article.platforms || []).flatMap((platform) => [
-      platform.name,
-      platform.url,
-      ...(platform.features || [])
-    ]),
-    ...(article.extraSections || []).flatMap((section) => [
-      section.title,
-      section.description,
-      ...(section.items || [])
-    ]),
-    ...(article.riskWarnings || []).flatMap((risk) => [risk.title, risk.description]),
-    ...(article.faq || []).flatMap((item) => [item.question, item.answer]),
-    article.quickChecklist?.title,
-    article.quickChecklist?.description,
-    ...(article.quickChecklist?.items || []),
-    ...(article.steps || []).flatMap((step) => [
-      step.title,
-      step.description,
-      step.imageCaption,
-      ...(step.images || []).flatMap((image) => [
-        image.caption,
-        image.alt
-      ]),
-      ...(step.tips || [])
-    ])
-  ].join(" ").toLowerCase();
+    ...(article.tags || []),
+    ...(article.keywords || [])
+  ].filter(Boolean).join(" ").toLowerCase();
+}
 
-  return text.includes(query);
+function isMatchHomeFilters(article) {
+  const text = articleSearchText(article);
+  const query = state.query.trim().toLowerCase();
+  if (query && !text.includes(query)) return false;
+  if (state.tag !== "all" && !text.includes(state.tag.toLowerCase())) return false;
+  return true;
 }
 
 function sortArticles(list) {
   return list.sort((a, b) => {
-    if (state.sort === "recommended") {
-      const recDiff = Number(isRecommended(b)) - Number(isRecommended(a));
-      if (recDiff) return recDiff;
-      return articleIndex(a) - articleIndex(b);
+    if (state.sort === "custom") {
+      const order = normalizeCustomOrder(customArticleOrder);
+      return order.indexOf(a.id) - order.indexOf(b.id);
     }
-    if (state.sort === "risk") {
-      const diff = riskRank(b) - riskRank(a);
-      if (diff) return diff;
-      return articleIndex(a) - articleIndex(b);
+    if (state.sort === "type") {
+      const categoryDiff = String(a.category || "").localeCompare(String(b.category || ""), "zh-Hans-CN");
+      if (categoryDiff) return categoryDiff;
     }
-    if (state.sort === "category") {
-      const diff = String(a.category || "").localeCompare(String(b.category || ""), "zh-Hans-CN");
-      if (diff) return diff;
-      return articleIndex(a) - articleIndex(b);
-    }
-    const dateDiff = new Date(b.updatedAt) - new Date(a.updatedAt);
-    if (dateDiff) return dateDiff;
-    return articleIndex(a) - articleIndex(b);
+    return compareByTime(a, b);
   });
 }
 
 function getFilteredArticles() {
-  return sortArticles(articles.filter((article) => isMatchFilter(article) && isMatchQuery(article)));
+  return sortArticles(articles.filter(isMatchHomeFilters));
 }
 
 function articleUrl(id) {
@@ -274,7 +215,7 @@ window.handleImageError = function handleImageError(img) {
 function renderArticleCard(article) {
   const tags = getArticleTags(article);
   return `
-    <a class="guide-card ${article.coverMode === "cover" ? "cover-fill" : ""}" href="${articleUrl(article.id)}">
+    <a class="guide-card ${article.coverMode === "cover" ? "cover-fill" : ""}" href="${articleUrl(article.id)}" data-article-id="${article.id}" draggable="${state.sort === "custom"}">
       <div class="card-cover">
         <img ${imageAttrs(article.cover, article.coverFallback)} alt="${article.title}">
       </div>
@@ -297,39 +238,12 @@ function renderArticleCard(article) {
   `;
 }
 
-function renderCategoryGrid() {
-  if (!categoryGrid) return;
-  categoryGrid.innerHTML = categoryEntries.map((category) => {
-    const count = articles.filter((article) => getArticleCategories(article).includes(category.key)).length;
-    return `
-      <button class="category-card ${state.category === category.key ? "active" : ""}" type="button" data-category="${category.key}">
-        <span>${category.title}</span>
-        <strong>${count} 篇</strong>
-        <p>${category.description}</p>
-      </button>
-    `;
-  }).join("");
-}
-
-function renderRecommended() {
-  if (!recommendedGrid) return;
-  const recommended = articles
-    .filter((article) => isRecommended(article) && isMatchQuery(article))
-    .sort((a, b) => articleIndex(a) - articleIndex(b))
-    .slice(0, 6);
-  recommendedGrid.innerHTML = recommended.length
-    ? recommended.map(renderArticleCard).join("")
-    : `<div class="empty-state">没有找到匹配的推荐教程。</div>`;
-}
-
 function renderHome() {
-  renderCategoryGrid();
-  renderRecommended();
-
   const filtered = getFilteredArticles();
   resultCount.textContent = `${filtered.length} 篇`;
   cardGrid.classList.toggle("card-grid", state.view === "grid");
   cardGrid.classList.toggle("guide-list", state.view === "list");
+  cardGrid.classList.toggle("custom-sort-active", state.sort === "custom");
 
   if (!filtered.length) {
     cardGrid.innerHTML = `<div class="empty-state">没有找到匹配教程。</div>`;
@@ -819,15 +733,6 @@ function navigateArticle(articleId) {
   showArticle(article);
 }
 
-document.querySelectorAll(".filter-chip").forEach((button) => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".filter-chip").forEach((chip) => chip.classList.remove("active"));
-    button.classList.add("active");
-    state.filter = button.dataset.filter;
-    renderHome();
-  });
-});
-
 searchInputs.forEach((input) => {
   input.addEventListener("input", (event) => {
     state.query = event.target.value;
@@ -838,11 +743,11 @@ searchInputs.forEach((input) => {
   });
 });
 
-viewButtons.forEach((button) => {
+tagFilters.forEach((button) => {
   button.addEventListener("click", () => {
-    viewButtons.forEach((item) => item.classList.remove("active"));
+    tagFilters.forEach((item) => item.classList.remove("active"));
     button.classList.add("active");
-    state.view = button.dataset.view;
+    state.tag = button.dataset.tag || "all";
     renderHome();
   });
 });
@@ -854,15 +759,49 @@ if (sortSelect) {
   });
 }
 
-if (categoryGrid) {
-  categoryGrid.addEventListener("click", (event) => {
-    const card = event.target.closest("[data-category]");
-    if (!card) return;
-    state.category = state.category === card.dataset.category ? "all" : card.dataset.category;
-    renderHome();
-    document.querySelector(".all-guides-block")?.scrollIntoView({ behavior: "smooth", block: "start" });
+cardGrid.addEventListener("dragstart", (event) => {
+  const card = event.target.closest(".guide-card");
+  if (state.sort !== "custom" || !card) {
+    event.preventDefault();
+    return;
+  }
+  draggedArticleId = card.dataset.articleId;
+  card.classList.add("is-dragging");
+  event.dataTransfer.effectAllowed = "move";
+  event.dataTransfer.setData("text/plain", draggedArticleId);
+});
+
+cardGrid.addEventListener("dragover", (event) => {
+  if (state.sort !== "custom" || !draggedArticleId) return;
+  const card = event.target.closest(".guide-card");
+  if (!card || card.dataset.articleId === draggedArticleId) return;
+  event.preventDefault();
+  cardGrid.querySelectorAll(".drag-target").forEach((item) => item.classList.remove("drag-target"));
+  card.classList.add("drag-target");
+});
+
+cardGrid.addEventListener("drop", (event) => {
+  if (state.sort !== "custom" || !draggedArticleId) return;
+  const card = event.target.closest(".guide-card");
+  event.preventDefault();
+  if (card && moveCustomArticle(draggedArticleId, card.dataset.articleId)) renderHome();
+});
+
+cardGrid.addEventListener("dragend", () => {
+  draggedArticleId = "";
+  cardGrid.querySelectorAll(".is-dragging, .drag-target").forEach((item) => {
+    item.classList.remove("is-dragging", "drag-target");
   });
-}
+});
+
+viewButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    viewButtons.forEach((item) => item.classList.remove("active"));
+    button.classList.add("active");
+    state.view = button.dataset.view || "grid";
+    renderHome();
+  });
+});
 
 detailView.addEventListener("click", (event) => {
   const control = event.target.closest("[data-gallery-action]");
