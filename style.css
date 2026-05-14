@@ -61,7 +61,7 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 28px;
-  padding: 0 max(24px, calc((100vw - 1440px) / 2 + 24px));
+  padding: 0 max(24px, calc((100vw - 1560px) / 2));
   border-bottom: 1px solid #edf0f5;
   background: #fff;
 }
@@ -1270,6 +1270,10 @@ button {
   grid-template-columns: 1fr;
 }
 
+.step-card.layout-wide {
+  grid-template-columns: 1fr;
+}
+
 .step-card.has-gallery.layout-phone {
   grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
 }
@@ -1645,31 +1649,28 @@ button {
 
 @media (min-width: 901px) {
   body.article-open {
-    overflow: hidden;
+    overflow: auto;
   }
 
   body.article-open .page {
-    height: calc(100vh - 72px);
+    min-height: calc(100vh - 72px);
     max-width: none;
-    padding: 22px 32px 0;
-    overflow: hidden;
+    padding: 22px 32px 56px;
+    overflow: visible;
   }
 
   .detail-view.has-floating-toc {
-    height: 100%;
+    min-height: 100%;
   }
 
   .detail-view.has-floating-toc .article-shell {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    height: auto;
+    display: block;
   }
 
   .detail-view.has-floating-toc .article-scroll {
-    flex: 1;
     min-height: 0;
-    overflow-y: auto;
-    overscroll-behavior: contain;
+    overflow: visible;
     scroll-padding-top: 22px;
   }
 
@@ -1716,8 +1717,11 @@ button {
   }
 
   .detail-view.has-floating-toc .floating-toc {
-    position: sticky;
-    top: 22px;
+    position: fixed;
+    top: 92px;
+    right: max(32px, calc((100vw - 1560px) / 2 + 32px));
+    width: min(260px, calc(100vw - 64px));
+    max-height: calc(100vh - 116px);
   }
 }
 

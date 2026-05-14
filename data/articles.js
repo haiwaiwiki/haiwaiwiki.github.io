@@ -1195,17 +1195,17 @@ window.GUIDE_ARTICLES = [
   },
   {
     id: "google-account-settings-checklist",
-    title: "Google 账号注册后常规设置与排查指南",
-    description: "注册后先检查安全、恢复方式、两步验证、地区、年龄和付款资料，解决 Gemini、AI Studio 等服务不可用的常见问题。",
-    cover: "assets/tutorial-images/google-settings/cover.png",
-    coverFallback: "assets/tutorial-images/google-settings/步骤01.png",
+    title: "Google 账号注册后常见问题与排查指南",
+    description: "注册后先完成安全检查、恢复方式、两步验证和地区核对，再排查 Gemini、AI Studio、Google Play 等服务不可用的常见问题。",
+    cover: "assets/tutorial-images/google-q&a/步骤1-01安全性与登录.png",
+    coverFallback: "assets/tutorial-images/google-q&a/步骤1-01安全检查.png",
     category: "Google 账号",
     group: "account",
     status: "available",
     difficulty: "简单",
     riskLevel: "低",
-    updatedAt: "2026-05-13",
-    duration: "5-8 分钟",
+    updatedAt: "2026-05-14",
+    duration: "4-6 分钟",
     tags: ["Google 账号", "账号安全", "两步验证", "排查清单"],
     recommended: true,
     featured: true,
@@ -1217,7 +1217,7 @@ window.GUIDE_ARTICLES = [
       "想检查 Google 账号地区、安全和恢复设置的用户",
       "想减少账号找回和安全风险的用户"
     ],
-    summary: "这是一份账号注册后的常规检查清单，帮助用户按顺序检查账号安全、恢复方式、年龄状态、Google Play 国家/地区、付款资料和 AI 服务可用性。",
+    summary: "这是一份 Google 账号注册后的常见问题排查清单，帮助用户按顺序检查账号安全、恢复方式、两步验证、地区状态和 AI 服务可用性。",
     topSections: [
       {
         type: "info",
@@ -1262,221 +1262,136 @@ window.GUIDE_ARTICLES = [
       }
     ],
     steps: [
-      {
-        id: "google-settings-step-01",
-        number: "01",
-        title: "进入 Google 账号管理页面",
-        navTitle: "账号管理",
-        description: "打开 Google 账号管理页面，进入账号总览。这里可以检查个人信息、安全、数据隐私、付款资料等核心设置。",
-        image: "assets/tutorial-images/google-settings/步骤01.png",
-        imageFallback: "assets/placeholder.svg",
-        imageAlt: "Google 账号管理页面入口",
-        imageCaption: "建议从 Google App、Gmail、浏览器头像菜单进入“管理您的 Google 账号”。",
-        tips: [
-          "如果不知道入口，可以打开 myaccount.google.com。",
-          "所有排查都建议从账号管理页面开始。",
-          "截图时注意隐藏邮箱、头像和姓名。"
-        ]
-      },
-      {
-        id: "google-settings-step-02",
-        number: "02",
-        title: "先检查账号安全总览",
-        navTitle: "安全总览",
-        description: "进入“安全性”页面，查看 Google 是否提示安全问题，例如恢复方式缺失、登录设备异常、两步验证未开启等。",
-        image: "assets/tutorial-images/google-settings/步骤02.png",
-        imageFallback: "assets/placeholder.svg",
-        imageAlt: "Google 账号安全性页面",
-        imageCaption: "“安全性”页面是新账号注册后最先应该检查的位置。",
-        tips: [
-          "如果页面提示“发现安全问题”，优先按提示处理。",
-          "不要忽略异常设备、异常登录和恢复方式缺失。",
-          "新账号注册后建议先完成基础安全设置，再去绑定其他服务。"
-        ]
-      },
-      {
-        id: "google-settings-step-03",
-        number: "03",
-        title: "添加恢复手机号",
-        navTitle: "恢复手机号",
-        description: "在 Google 账号的安全设置中添加常用手机号，用于找回账号、接收安全提醒和进行身份验证。",
-        image: "assets/tutorial-images/google-settings/步骤03.png",
-        imageFallback: "assets/placeholder.svg",
-        imageAlt: "添加 Google 账号恢复手机号",
-        imageCaption: "恢复手机号可以提高账号找回成功率。",
-        tips: [
-          "建议使用自己长期使用的手机号。",
-          "手机号截图必须打码。",
-          "不要使用来路不明的接码号码。",
-          "接码号码可能导致账号找回困难或安全风险。"
-        ]
-      },
-      {
-        id: "google-settings-step-04",
-        number: "04",
-        title: "添加恢复邮箱",
-        navTitle: "恢复邮箱",
-        description: "添加一个自己长期可用的恢复邮箱，方便在忘记密码、设备丢失或账号异常时找回账号。",
-        image: "assets/tutorial-images/google-settings/步骤04.png",
-        imageFallback: "assets/placeholder.svg",
-        imageAlt: "添加 Google 账号恢复邮箱",
-        imageCaption: "恢复邮箱是 Google 账号找回的重要辅助方式。",
-        tips: [
-          "恢复邮箱最好不要和当前账号使用同一套密码。",
-          "建议使用自己能长期访问的邮箱。",
-          "恢复邮箱截图需要打码。"
-        ]
-      },
-      {
-        id: "google-settings-step-05",
-        number: "05",
-        title: "开启两步验证",
-        navTitle: "两步验证",
-        description: "进入两步验证设置，按照页面提示开启 2-Step Verification。开启后，登录账号时除了密码，还需要额外验证。",
-        image: "assets/tutorial-images/google-settings/步骤05.png",
-        imageFallback: "assets/placeholder.svg",
-        imageAlt: "开启 Google 两步验证",
-        imageCaption: "两步验证是保护 Google 账号安全的核心设置。",
-        tips: [
-          "新账号注册后建议尽快开启。",
-          "开启前先确认恢复手机号和恢复邮箱可用。",
-          "不要把验证码告诉别人。"
-        ]
-      },
-      {
-        id: "google-settings-step-06",
-        number: "06",
-        title: "设置登录密钥 Passkey",
-        navTitle: "登录密钥",
-        description: "如果设备支持，可以为 Google 账号添加登录密钥。登录密钥可以使用设备解锁方式完成登录，例如指纹、面容、屏幕锁等。",
-        image: "assets/tutorial-images/google-settings/步骤06.png",
-        imageFallback: "assets/placeholder.svg",
-        imageAlt: "设置 Google 登录密钥 Passkey",
-        imageCaption: "登录密钥可以减少对密码和短信验证码的依赖。",
-        tips: [
-          "建议在自己的主力手机或电脑上设置。",
-          "不要在公共设备上设置登录密钥。",
-          "换手机或重装系统前，要确认还有其他登录和找回方式。"
-        ]
-      },
-      {
-        id: "google-settings-step-07",
-        number: "07",
-        title: "检查登录设备和最近安全活动",
-        navTitle: "设备活动",
-        description: "查看当前账号登录过哪些设备，以及最近是否有异常安全活动。如果发现不认识的设备，应及时退出并修改密码。",
-        image: "assets/tutorial-images/google-settings/步骤07.png",
-        imageFallback: "assets/placeholder.svg",
-        imageAlt: "检查 Google 登录设备和最近安全活动",
-        imageCaption: "设备列表可以帮助判断账号是否存在异常登录。",
-        tips: [
-          "不认识的设备要谨慎处理。",
-          "如果账号被他人登录过，建议修改密码并重新检查两步验证。",
-          "公共电脑登录后要及时退出账号。"
-        ]
-      },
-      {
-        id: "google-settings-step-08",
-        number: "08",
-        title: "检查个人信息和生日",
-        navTitle: "个人信息",
-        description: "进入“个人信息”页面，检查姓名、生日、性别等信息是否正确。年龄状态可能影响部分 Google 服务和内容访问。",
-        image: "assets/tutorial-images/google-settings/步骤08.png",
-        imageFallback: "assets/placeholder.svg",
-        imageAlt: "检查 Google 账号个人信息和生日",
-        imageCaption: "部分服务可能根据年龄信息限制使用。",
-        tips: [
-          "Google 某些内容和服务会受年龄要求影响。",
-          "如被要求确认年龄，应按官方页面提示处理。",
-          "不建议随意填写不真实的生日信息。",
-          "年龄验证方式和可用选项可能因账号、设备和地区不同而不同。"
-        ]
-      },
-      {
-        id: "google-settings-step-09",
-        number: "09",
-        title: "核对 Google Play 国家/地区",
-        navTitle: "Play 地区",
-        description: "如果需要使用 Google Play、Gemini 移动应用或部分地区相关服务，需要核对 Google Play 当前国家/地区是否符合实际使用需求。",
-        image: "assets/tutorial-images/google-settings/步骤09.png",
-        imageFallback: "assets/placeholder.svg",
-        imageAlt: "核对 Google Play 国家地区",
-        imageCaption: "Google Play 国家/地区会影响应用、游戏和内容可见性。",
-        tips: [
-          "Google Play 国家/地区不一定等同于 Google 账号注册地点。",
-          "Play 国家/地区通常与付款资料、IP、设备和使用环境有关。",
-          "切换国家/地区可能有次数和时间限制，操作前要谨慎。",
-          "不建议频繁切换地区。"
-        ]
-      },
-      {
-        id: "google-settings-step-10",
-        number: "10",
-        title: "检查 Google 付款资料地区",
-        navTitle: "付款资料",
-        description: "进入 Google Payments 设置，查看付款资料中的国家/地区。如果付款资料地区异常，可能影响 Google Play、订阅、应用可见性等。",
-        image: "assets/tutorial-images/google-settings/步骤10.png",
-        imageFallback: "assets/placeholder.svg",
-        imageAlt: "检查 Google 付款资料地区",
-        imageCaption: "付款资料地区是部分服务判断地区的重要因素之一。",
-        tips: [
-          "付款资料国家/地区可能不能随便修改。",
-          "如果地区错误，可能需要创建新的付款资料。",
-          "删除或修改付款资料前要确认是否有订阅、余额或未完成订单。",
-          "不要为了临时使用某个服务频繁改地区。"
-        ]
-      },
-      {
-        id: "google-settings-step-11",
-        number: "11",
-        title: "检查 Gemini / AI 服务可用性",
-        navTitle: "AI 服务",
-        description: "如果 Gemini、Google AI Studio、Antigravity 或其他 AI 服务提示不可用，需要综合检查服务开放地区、账号地区、Play 地区、年龄状态和当前网络环境。",
-        image: "assets/tutorial-images/google-settings/步骤11.png",
-        imageFallback: "assets/placeholder.svg",
-        imageAlt: "检查 Google AI 服务可用性",
-        imageCaption: "AI 服务不可用不一定是账号注册失败，可能是地区、年龄、产品开放范围或环境共同影响。",
-        tips: [
-          "不同 Google AI 产品开放地区不同。",
-          "Gemini web app、Gemini mobile app、AI Studio 等不是完全同一套可用范围。",
-          "不要只看一个设置就判断账号不可用。",
-          "建议按检查清单逐项排查。"
-        ]
-      },
-      {
-        id: "google-settings-step-12",
-        number: "12",
-        title: "完成账号体检清单",
-        navTitle: "完成体检",
-        description: "完成安全设置、恢复方式、年龄信息、地区信息和服务可用性检查后，可以把这个账号作为长期使用账号保存。",
-        image: "assets/tutorial-images/google-settings/步骤12.png",
-        imageFallback: "assets/placeholder.svg",
-        imageAlt: "完成 Google 账号体检清单",
-        imageCaption: "建议把安全设置完成后的状态作为账号稳定使用的起点。",
-        tips: [
-          "记录好恢复邮箱和绑定手机号。",
-          "开启两步验证和登录密钥。",
-          "保持登录环境相对稳定。",
-          "不要频繁切换地区、设备和异常网络环境。",
-          "后续遇到问题，优先回到这篇清单逐项排查。"
-        ]
-      }
+          {
+                "id": "google-settings-step-01",
+                "number": "01",
+                "title": "先看安全总览和安全检查",
+                "navTitle": "安全总览",
+                "description": "注册完成后，先进入 Google 账号的“安全性”页面，查看是否有异常登录、恢复方式缺失、两步验证未开启等提示。安全检查页会把需要优先处理的问题集中列出来。",
+                "imageLayout": "wide",
+                "images": [
+                      {
+                            "src": "assets/tutorial-images/google-q&a/步骤1-01安全性与登录.png",
+                            "fallback": "assets/placeholder.svg",
+                            "alt": "在账号页面进入“安全性”，优先查看登录方式与安全提醒。",
+                            "caption": "在账号页面进入“安全性”，优先查看登录方式与安全提醒。",
+                            "layout": "wide"
+                      },
+                      {
+                            "src": "assets/tutorial-images/google-q&a/步骤1-01安全检查.png",
+                            "fallback": "assets/placeholder.svg",
+                            "alt": "安全检查会集中提示账号目前最需要处理的风险项。",
+                            "caption": "安全检查会集中提示账号目前最需要处理的风险项。",
+                            "layout": "wide"
+                      }
+                ],
+                "tips": [
+                      "如果看到红色或黄色风险提示，先按官方页面提示处理。",
+                      "不要急着绑定订阅或其他服务，先确保账号能稳定登录和找回。",
+                      "公共电脑或临时设备登录后，要及时退出账号。"
+                ]
+          },
+          {
+                "id": "google-settings-step-02",
+                "number": "02",
+                "title": "开启两步验证，并补齐登录方式",
+                "navTitle": "两步验证",
+                "description": "两步验证是新账号最重要的安全设置。建议开启后，再根据自己的设备情况添加通信密钥或身份验证器，减少只依赖短信验证码带来的不稳定。",
+                "imageLayout": "wide",
+                "images": [
+                      {
+                            "src": "assets/tutorial-images/google-q&a/步骤1-02两步验证.png",
+                            "fallback": "assets/placeholder.svg",
+                            "alt": "进入“两步验证”，按页面提示完成开启流程。",
+                            "caption": "进入“两步验证”，按页面提示完成开启流程。",
+                            "layout": "wide"
+                      },
+                      {
+                            "src": "assets/tutorial-images/google-q&a/步骤1-02-01通信密钥.png",
+                            "fallback": "assets/placeholder.svg",
+                            "alt": "支持的设备可以添加通信密钥，用设备解锁完成登录验证。",
+                            "caption": "支持的设备可以添加通信密钥，用设备解锁完成登录验证。",
+                            "layout": "wide"
+                      },
+                      {
+                            "src": "assets/tutorial-images/google-q&a/步骤1-02-02身份验证器.png",
+                            "fallback": "assets/placeholder.svg",
+                            "alt": "身份验证器适合长期使用，建议保管好备份方式。",
+                            "caption": "身份验证器适合长期使用，建议保管好备份方式。",
+                            "layout": "wide"
+                      }
+                ],
+                "tips": [
+                      "开启两步验证前，先确认恢复手机号和恢复邮箱可用。",
+                      "不要把验证码、备份码、身份验证器二维码发给别人。",
+                      "通信密钥不要添加在公共设备或不受你控制的设备上。"
+                ]
+          },
+          {
+                "id": "google-settings-step-03",
+                "number": "03",
+                "title": "补齐恢复手机号和恢复邮箱",
+                "navTitle": "恢复方式",
+                "description": "恢复手机号和恢复邮箱决定了账号以后能不能顺利找回。这里建议使用自己长期可控的号码和邮箱，不建议使用临时接码或来路不明的邮箱。",
+                "imageLayout": "wide",
+                "images": [
+                      {
+                            "src": "assets/tutorial-images/google-q&a/步骤1-02-03辅助号码.png",
+                            "fallback": "assets/placeholder.svg",
+                            "alt": "添加辅助电话号码，用于账号找回和安全验证。",
+                            "caption": "添加辅助电话号码，用于账号找回和安全验证。",
+                            "layout": "wide"
+                      },
+                      {
+                            "src": "assets/tutorial-images/google-q&a/步骤1-02-04辅助邮箱.png",
+                            "fallback": "assets/placeholder.svg",
+                            "alt": "添加辅助邮箱，避免忘记密码或设备丢失后无法找回账号。",
+                            "caption": "添加辅助邮箱，避免忘记密码或设备丢失后无法找回账号。",
+                            "layout": "wide"
+                      }
+                ],
+                "tips": [
+                      "恢复手机号和恢复邮箱截图时注意打码。",
+                      "恢复邮箱最好和当前 Google 账号使用不同密码。",
+                      "接码号码可能导致账号找回困难，也会带来安全风险。"
+                ]
+          },
+          {
+                "id": "google-settings-step-04",
+                "number": "04",
+                "title": "核对国家/地区，再排查 Gemini 等服务",
+                "navTitle": "地区与服务",
+                "description": "如果 Gemini、AI Studio、Google Play 或订阅相关服务不可用，不要只看一个入口。需要综合核对账号安全状态、Google Play 国家/地区、付款资料、年龄状态、网络环境和产品开放范围。",
+                "imageLayout": "wide",
+                "images": [
+                      {
+                            "src": "assets/tutorial-images/google-q&a/步骤1-03国家地区.png",
+                            "fallback": "assets/placeholder.svg",
+                            "alt": "在相关页面查看国家/地区信息，作为服务不可用时的排查参考。",
+                            "caption": "在相关页面查看国家/地区信息，作为服务不可用时的排查参考。",
+                            "layout": "wide"
+                      }
+                ],
+                "tips": [
+                      "Google 账号地区、Google Play 国家/地区和付款资料地区不一定是同一个概念。",
+                      "不要频繁切换地区、设备和网络环境。",
+                      "不同 Google AI 产品的开放范围可能不同，最终以官方页面实际提示为准。"
+                ]
+          }
     ],
     quickChecklist: {
-      title: "遇到 Gemini / AI 服务不可用时，先查这几项",
-      description: "下面是优先排查清单，不代表检查后一定可用，最终仍以 Google 官方页面和产品实际开放范围为准。",
-      items: [
-        "当前服务是否在该地区开放",
-        "Google 账号生日是否满足年龄要求",
-        "Google Play 国家/地区是否异常",
-        "Google Payments 付款资料地区是否异常",
-        "当前网络环境是否频繁跳动",
-        "是否使用了不稳定或高风险 IP",
-        "账号是否刚注册，是否触发安全验证",
-        "是否缺少恢复手机号、恢复邮箱、两步验证",
-        "是否在多个设备频繁登录",
-        "是否有异常安全提醒未处理"
-      ]
+          "title": "遇到 Google 账号注册后常见问题，先查这几项",
+          "description": "这份清单用于快速排查账号安全、找回方式、地区和服务可用性问题，不代表检查后某个服务一定可用，最终仍以 Google 官方页面实际显示为准。",
+          "items": [
+                "账号安全检查是否还有未处理的风险提示",
+                "两步验证是否已开启，是否有可用的备用登录方式",
+                "恢复手机号和恢复邮箱是否长期可控",
+                "Google Play 国家/地区和付款资料地区是否异常",
+                "生日或年龄状态是否影响相关服务",
+                "当前网络环境是否频繁跳动或风险过高",
+                "Gemini、AI Studio 等服务是否在当前地区开放",
+                "是否刚注册后立刻高频登录多个设备或服务"
+          ]
     },
     faq: [
       {

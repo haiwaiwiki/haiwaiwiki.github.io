@@ -526,6 +526,8 @@ function setActiveStep(stepId) {
   detailView.querySelectorAll(".toc-link").forEach((button) => {
     button.classList.toggle("active", button.dataset.stepId === stepId);
   });
+  const toc = detailView.querySelector(".floating-toc");
+  if (toc) toc.scrollTop = 0;
 }
 
 function setupTocObserver() {
